@@ -42,6 +42,10 @@ footer{
   margin-top: auto;
 }
 
+.home{
+
+}
+
 .navbar{
   list-style:none;
 
@@ -83,8 +87,11 @@ footer{
     transform: rotate(359deg);
   }
 }
+.home{
+  
+}
 
-#welcome{
+#home{
   text-align: center;
   margin: 0 25px;
   font-size: 30px;
@@ -94,7 +101,13 @@ footer{
   
 }
 
+
 #p1{
   text-align: center;
   margin: 0 25px;
+}
+
+#footer{
+  text-align: center;
+
 }
