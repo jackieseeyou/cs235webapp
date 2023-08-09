@@ -17,6 +17,7 @@ class GameFileCSVReader:
             return
         with open(self.__filename, 'r', encoding='utf-8-sig') as file:
             reader = csv.DictReader(file)
+            
             for row in reader:
                 try:
                     game_id = int(row["AppID"])
