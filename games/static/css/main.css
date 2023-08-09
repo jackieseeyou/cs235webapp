@@ -108,7 +108,7 @@ footer{
 
 .game__table{
   width: 60%;
-  height: 60%;
+  max-height: 80vh;
   border-collapse: collapse;
   border: 1px solid #dcddde;
   margin: 0 auto;
