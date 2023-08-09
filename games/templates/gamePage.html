@@ -23,18 +23,18 @@
     </nav>
     </header> 
     <main>
-        <table class = "game__table">
+        <div class="game__table">
+        <table>
             <thead>
             <tr>
                 <th>AppID</th>
                 <th>Name</th>
+                <th>Header image</th>
                 <th>Release date</th>
                 <th>Price</th>
                 <th>About the game</th>
                 <th>Reviews</th>
-                <th>Header image</th>
                 <th>Website</th>
-                <th>Recommendations</th>
                 <th>Publishers</th>
                 <th>Genres</th>
             </tr>
@@ -44,12 +44,21 @@
             <tr>
                 <td>{{ game.game_id }}</td>
                 <td>{{ game.title }}</td>
+                <td><img src={{game.image_url}}></img></td>
+                <td>{{game.release_date}}</td>
+                <td>{{game.price}}</td>
+                <td>{{game.description}}</td>
+                <td>{{game.reviews}}</td>
+                <td>{{game.website_url}}</td>
+                <td>{{game.publisher}}</td>
+                <td>{{game.genres}}</td>
             </tr>
             {% endfor %}
         </tbody>
             
 
-        </table>            
+        </table> 
+        </div>           
     </main>
     
     
