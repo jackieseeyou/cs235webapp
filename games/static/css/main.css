@@ -45,6 +45,8 @@ footer{
 
 .navbar{
   list-style:none;
+  display: flex;
+  justify-content: center;
 
 }
 .navbar li{
@@ -115,4 +117,29 @@ footer{
   margin-top: 20px;
   margin-bottom: 20px;
   overflow: scroll;
+}
+.game__table td{
+  border: 1px solid #dcddde;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #dcddde;
+  text-decoration: none;
+}
+
+#credits{
+  text-align: center;
+  float:right;
+}
+
+.game__description{
+  align-items: center;
+}
+.game__description a {
+  align-self: auto;
+}
+
+.game__description p {
+  text-align: center;
 }
