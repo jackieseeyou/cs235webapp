@@ -83,6 +83,7 @@ class Game:
         self.__genres: list = []
         self.__reviews: list = []
         self.__publisher = None
+        self.__video_url = None
 
     @property
     def publisher(self) -> Publisher:
@@ -177,6 +178,17 @@ class Game:
     @property
     def genres(self) -> list:
         return self.__genres
+    
+    @property
+    def video_url(self):
+        return self.__video_url
+    
+    @video_url.setter
+    def video_url(self, video_url: str):
+        if isinstance(video_url, str) and video_url.strip() != "":
+            self.__video_url = video_url
+        else:
+            self.__video_url = None
 
     def add_genre(self, genre: Genre):
         if not isinstance(genre, Genre) or genre in self.__genres:

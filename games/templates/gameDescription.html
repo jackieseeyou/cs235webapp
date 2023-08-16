@@ -10,21 +10,18 @@
     {% include 'navigation.html' %} 
     <main>
         {% block content %}
-        <h1>{{game.title}}</h1>
+        <h1 id="title">{{game.title}}</h1>
         <div class="game__description">
-            <img src={{game.image_url}} alt="{{game.title}}"></img>
-            
-            <p>{{game.description}}</p>
+            <img id="game__image", src={{game.image_url}} alt="{{game.title}}"></img>
+            <p><strong>Release Date:</strong> {{game.release_date}}</p>
+            <p><strong>About:</strong> {{game.description}}</p>
         </div>
+        <video src="{{game.video_url}}" controls></video>
         {% endblock %}
     </main>
     
+    {% include 'footer.html' %}
     
-    <footer>
-        <div class="footer">
-            <p>kyao733 | jsie347 | mfu466</p>
-        </div>
-    </footer>
 </body>
 
 </html>
