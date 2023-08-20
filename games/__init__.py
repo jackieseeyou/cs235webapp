@@ -11,7 +11,6 @@ def get_games():
     csv_reader = csvreader.GameFileCSVReader("games/adapters/data/games.csv")
     csv_reader.read_csv_file()
     
-    print(csv_reader.get_unique_games_count())
     return csv_reader.dataset_of_games
 
 
@@ -26,7 +25,7 @@ def create_app():
         # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
         return render_template("layout.html")
     
-    @app.route('/gamePage')
+    @app.route('/gamesPage')
     @app.route('/gamesPage/<int:page>')
     def games_page(page=1):
         per_page = 10

@@ -47,11 +47,25 @@
             {% if page < total_pages %}
                 <a href="{{ url_for('games_page', page=page+1) }}">Next</a>
             {% endif %}
+
+            <br></br>
+
+            <input type="number" id="page_number" name="page_number" min="1" max="{{ total_pages }}">
+            <button id="submit_button" onclick="goToPage()">Go to page</button>
         </div>         
     </main>
 
 
     {% include 'footer.html' %}
 </body>
+
+<script>
+    function goToPage() {
+        var page_number = document.getElementById("page_number").value;
+        if (page_number <= "{{ total_pages }}") {
+            window.location.href = "{{ url_for('games_page'  ) }}/" + page_number;
+        }
+    }
+</script>
 
 </html>

@@ -32,7 +32,7 @@ def test_publisher_eq():
     assert publisher3 == publisher3
 
 
-def test_publisher_lt():
+def test_publisher_lt(): 
     publisher1 = Publisher("Wild Rooster")
     publisher2 = Publisher("Century Game")
     publisher3 = Publisher("Big Fish Games")
