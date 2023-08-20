@@ -27,8 +27,14 @@ def create_app():
         return render_template("layout.html")
     
     @app.route('/gamePage')
-    def games_page():
-        return render_template("gamePage.html", games = get_games())
+    @app.route('/gamesPage/<int:page>')
+    def games_page(page=1):
+        per_page = 10
+        start = (page - 1) * per_page
+        end = start + per_page
+        games = get_games()[start:end]
+        total_pages = -(-len(get_games()) // per_page)
+        return render_template("gamePage.html", games=games, page=page, total_pages=total_pages)
     
     @app.route('/gamesPage/<int:game_id>')
     def game_description(game_id):
