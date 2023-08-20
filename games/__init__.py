@@ -26,11 +26,21 @@ def create_app():
         # Use Jinja to customize a predefined html page rendering the layout for showing a single game.
         return render_template("layout.html")
     
-    @app.route('/gamepage')
+    @app.route('/gamePage')
     def games_page():
         return render_template("gamePage.html", games = get_games())
     
+    @app.route('/gamesPage/<int:game_id>')
+    def game_description(game_id):
+        game = next((game for game in get_games() if game.game_id == game_id), None)
+        if game:
+            print(game)
+            return render_template("gameDescription.html", game= game)
+        return "Game not found", 404
+    
     return app
+
+
 
 
 create_app()
