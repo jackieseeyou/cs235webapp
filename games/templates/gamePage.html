@@ -17,7 +17,6 @@
                 <th>Game</th>
                 <th>Release date</th>
                 <th>Price</th>
-                <th>Reviews</th>
                 <th>Publishers</th>
                 <th>Genres</th>
             </tr>
@@ -29,9 +28,13 @@
                 <td><a href="{{url_for('game_description', game_id=game.game_id)}}"><img src={{game.image_url}} alt="{{game.title}}"></img></a></td>
                 <td>{{game.release_date}}</td>
                 <td>${{game.price}}</td>
-                <td>{{game.reviews}}</td>
-                <td>{{game.publisher}}</td>
-                <td>{{game.genres}}</td>
+                <td>{{game.publisher.publisher_name}}</td>
+                <td>
+                    {% for genre in game.genres %}
+                        {{genre.genre_name}}
+                    {% endfor %}
+                </td>
+
             </tr>
             {% endfor %}
         </tbody>
