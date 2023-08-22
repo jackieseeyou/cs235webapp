@@ -6,6 +6,9 @@
   font-size: 16px;
 }
 body{
+  width: 70%;
+  height: 100vh;
+  margin: 0 auto;
   background-color: #36393f;
   color: #dcddde;
   overflow-x:auto;
