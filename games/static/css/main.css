@@ -2,16 +2,19 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Roboto', sans-serif, cursive;
-  font-size: 16px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 body{
-  background-color: #36393f;
-  color: #dcddde;
+  width: 1060px;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: #151515;
+  color: #d5d5d5;
   overflow-x:auto;
   min-height: 100vh;
   display: flex;
- flex-direction: column;
+  flex-direction: column;
+  overflow: auto;
 }
 
 li, a, button{
@@ -37,17 +40,16 @@ footer{
   align-items: center;
   padding: 5px 20px;
   background-color: #677bc4;
-  height: 100px;
-  
-  margin-top: auto;
+  height: 40px;
+  margin-top: -5px;
 }
 
 
 .navbar{
-  list-style:none;
-  display: flex;
-  justify-content: center;
-
+  list-style-type: none;
+  padding: 0;
+  margin: -20px;
+  display: flex;  
 }
 .navbar li{
   display: inline-block;
@@ -57,6 +59,7 @@ footer{
 
 .navbar li a{
   transition: all 0.3s ease 0s;
+  padding: 11px 20px;
 }
 
 .navbar li a:hover{
@@ -64,15 +67,20 @@ footer{
 
 }
 
+li, a, button{
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 600;
+  color: #dcddde;
+  text-decoration: none;
+} 
+
 .logo{
   width: 100;
   height: 100;
   cursor:pointer;
-  
-  
-  
-  
 }
+
 .logo:hover{
   animation: rotation 2s infinite linear;
 }
@@ -86,6 +94,18 @@ footer{
     transform: rotate(359deg);
   }
 }
+
+footer{
+  display:flex;
+  justify-content:space-between;
+  align-items: center;
+  padding: 5px 20px;
+  background-color: #677bc4;
+  height: 30px;
+  font-size: 10px;
+  margin-top: auto;
+}
+
 
 #home{
   text-align: center;
@@ -103,10 +123,7 @@ footer{
   margin: 0 25px;
 }
 
-#footer{
-  text-align: center;
 
-}
 
 .games__table {
   width: 100%;
@@ -186,47 +203,20 @@ footer{
 }
 
 .text{
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 25px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 500;
   color: #dcddde;
   text-decoration: none;
+  margin: 20px;
 }
 
-
-#pagination{
-  text-align: center;
-  margin: 0 25vh;
-  font-size: 30px;
-  font-weight: 700;
-  color: #dcddde;
-  size: 100px;
-  text-decoration: none;
-}
-#pagation input{
-  text-align: center;
-  margin: 0 25vh;
-  font-size: 30px;
-  font-weight: 700;
-  color: #dcddde;
-  size: 100px;
-  text-decoration: none;
+main{
+  border-style: solid;
+  border-width: 1px;
+  height: 100vh;
+  overflow: hidden
 }
 
-#pagination button{
-  background-color: #677bc4;
-  border: none;
-  color: white;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 20px;
-  margin: 4px 2px;
-  cursor: pointer;
-}
 
 .search-dropdown {
   border: 1px solid #ccc;
