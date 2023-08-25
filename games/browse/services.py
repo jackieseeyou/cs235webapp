@@ -22,3 +22,8 @@ def search_games(query, repo):
     filtered_games = [game for game in games if query.lower() in game['title'].lower()]
     return filtered_games
 
+def get_game(game_id, repo):
+    game = repo.get_game(game_id)
+    if game is None:
+        return None
+    return game

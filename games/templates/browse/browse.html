@@ -25,7 +25,7 @@
                         {{ game.game_id }}
                     </td>
                     <td>
-                        <a id="game-image"><img src="{{ game.image }}"></img></a>
+                        <a href="{{ url_for('description_bp.description', game_id = game.game_id) }}"id="game-image"><img src="{{ game.image }}"></img></a>
                         {{ game.title }}
                     </td>
                     <td>
@@ -50,6 +50,7 @@
                 resultsContainer.innerHTML = '';
                 if (data.length > 0) {
                     data.forEach(game => {
+                        var game_id = game.game_id;
                         resultsContainer.innerHTML += `
                             <div class="search-result-item">
                                 <img src="${game.image}" alt="${game.title}" width="30" style="vertical-align: middle;">
