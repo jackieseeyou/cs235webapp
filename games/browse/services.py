@@ -10,8 +10,9 @@ def get_games(repo: AbstractRepository):
     for game in games:
         game_dict = {
             'game_id': game.game_id,
+            'image': game.image_url,
             'title': game.title,
-            'game_url': game.release_date
+            'release_date': game.release_date
         }
         game_dicts.append(game_dict)
     return game_dicts

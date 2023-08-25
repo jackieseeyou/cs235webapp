@@ -8,33 +8,40 @@
 <body>
     <header id="header">
         <h1>CS235 2023: My Game Library</h1>
-        <div class="copyright">kyao733 | jsie347 | mfu466</div>
+        {% include 'navigation.html' %}
     </header>
     <h1>Total Games - {{ num_games }}</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>TITLE</th>
-                <th>Release Date</th>
-            </tr>
-        </thead>
+    <div class="game__table">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>TITLE</th>
+                    <th>IMAGE</th>
+                    <th>Release Date</th>
+                </tr>
+            </thead>
 
-        <tbody>
-            {% for game in games %}
-            <tr>
-                <td>
-                    {{ game.game_id }}
-                </td>
-                <td>
-                    {{ game.title }}
-                </td>
-                <td>
-                    {{ game.game_url }}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            <tbody>
+                {% for game in games %}
+                <tr>
+                    <td>
+                        {{ game.game_id }}
+                    </td>
+                    <td>
+                        {{ game.title }}
+                    </td>
+                    <td>
+                        <img src="{{ game.image }}"></img>
+                    <td>
+                        {{ game.release_date }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% include 'footer.html' %}
 </body>
 </html>

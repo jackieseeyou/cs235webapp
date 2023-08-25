@@ -1,5 +1,6 @@
 from flask import Flask, render_template, Blueprint
 import games.adapters.repository as repo
+from games.browse import services
 browse_blueprint = Blueprint(
     'games_bp', __name__)
 
@@ -14,3 +15,4 @@ def browse_games():
         games=all_games,
         num_games=num_games
     )
+
