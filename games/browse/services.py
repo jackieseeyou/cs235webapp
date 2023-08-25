@@ -4,10 +4,10 @@ from games.domainmodel.model import Game
 def get_number_of_games(repo: AbstractRepository):
     return repo.get_number_of_games()
 
-def get_games(repo: AbstractRepository):
+def get_games(offset, limit, repo: AbstractRepository):
     games = repo.get_games()
     game_dicts = []
-    for game in games:
+    for game in games[offset:offset+limit]:
         game_dict = {
             'game_id': game.game_id,
             'image': game.image_url,
