@@ -246,15 +246,6 @@ main{
   margin: 20px;
 }
 
-main{
-  display: grid;
-  border-style: solid;
-  border-width: 1px;
-  border-color:#515151;
-  height: 100vh;
-  overflow: auto;
-}
-
 .search-result-item:hover {
   background-color: #f0f0f0;
 
