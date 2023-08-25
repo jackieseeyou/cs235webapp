@@ -218,6 +218,19 @@ main{
 
 .search__container{
   position: relative;
+  display: inline-block;
+  margin: 20px;
+  
+
+}
+
+#search-box{
+  width: 30vh;
+  height: 30px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 .search-dropdown {
@@ -226,7 +239,7 @@ main{
   max-height: 150px;  /* You can adjust this */
   overflow-y: auto;   /* Allows scrolling if many results */
   position: absolute; /* Makes the dropdown appear below the search box */
-  width: 200px;       /* Adjust width to match the search box */
+  width: 30vh;       /* Adjust width to match the search box */
   display: none;      /* Initially hidden */
 }
 
