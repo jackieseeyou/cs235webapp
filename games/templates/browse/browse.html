@@ -11,8 +11,10 @@
         {% include 'navigation.html' %}
     </header>
     <h1>Total Games - {{ num_games }}</h1>
+    <div class="search__container">
     <input type="text" id="search-box" placeholder="Search games...">
     <div id="search-results" class="search-dropdown"></div>
+    </div>
 
         <table class="games__table">
             <thead>

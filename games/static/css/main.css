@@ -217,9 +217,13 @@ main{
   overflow: hidden
 }
 
+.search__container{
+  position: relative;
+}
 
 .search-dropdown {
   border: 1px solid #ccc;
+  background-color: gray;
   max-height: 150px;  /* You can adjust this */
   overflow-y: auto;   /* Allows scrolling if many results */
   position: absolute; /* Makes the dropdown appear below the search box */
@@ -235,3 +239,4 @@ main{
 .search-result-item:hover {
   background-color: #f0f0f0;
 }
+
