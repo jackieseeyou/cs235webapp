@@ -8,8 +8,9 @@
         <div class="search__container">
             <input type="text" id="search-box" placeholder="Search games...">
             <div id="search-results" class="search-dropdown"></div>
-        </div>
-        <table class="games__table">
+    </div>
+    <div class="games__table">
+        <table>
             <thead>
                 <tr>
                     <th>ID</th>
@@ -17,7 +18,6 @@
                     <th>Release Date</th>
                 </tr>
             </thead>
-
             <tbody>
                 {% for game in games %}
                 <tr>
@@ -25,7 +25,7 @@
                         {{ game.game_id }}
                     </td>
                     <td>
-                        <img id="game__image", src="{{ game.image }}"></img>
+                        <a id="game-image"><img src="{{ game.image }}"></img></a>
                         {{ game.title }}
                     </td>
                     <td>
@@ -36,7 +36,6 @@
             </tbody>
         </table>
     </div>
-
 </body>
 
 <script>
