@@ -147,6 +147,8 @@ main{
   display: flex;
   flex-direction: row;
   padding: 0;
+  height: 300px;
+
 }
 
 .game__sidebar{
@@ -164,20 +166,19 @@ main{
   max-width: 305px;
 }
 .game__about{
-  font-size: 10px;
+  font-size: 12px;
   padding: 20px;
 }
 
-.game__video{
-  height: auto;
-  padding-top: 20px;
 
-  
+.game__video{
+  height: 250px;
+  padding-top: 20px;
 }
 
 .game__video video{
-  width: 400px;
-  height: auto;
+  height: 250px;
+  width: auto;
 }
 
 
