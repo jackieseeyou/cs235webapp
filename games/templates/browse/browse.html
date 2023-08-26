@@ -1,0 +1,90 @@
+{% extends 'layout.html' %}
+
+{% block title %} Games {% endblock %}
+
+{% block content %}
+<body>
+    <div>
+        <div class="search__container">
+            <input type="text" id="search-box" placeholder="Search games...">
+            <div id="search-results" class="search-dropdown"></div>
+    </div>
+    <div class="games__table">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>TITLE</th>
+                    <th>Release Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for game in games %}
+                <tr>
+                    <td>
+                        {{ game.game_id }}
+                    </td>
+                    <td>
+                        <a href="{{ url_for('description_bp.description', game_id = game.game_id) }}"id="game-image"><img src="{{ game.image }}"></img></a>
+                        {{ game.title }}
+                    </td>
+                    <td>
+                        {{ game.release_date }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        {% if page > 1 %}
+        <a href="{{ url_for('games_bp.browse_games', page=page-1) }}">Previous</a>
+    {% endif %}
+
+    Page {{ page }} of {{ total_pages }}
+
+    {% if page < total_pages %}
+        <a href="{{ url_for('games_bp.browse_games', page=page+1) }}">Next</a>
+    {% endif %}
+
+    
+</body>
+
+<script>
+    document.getElementById('search-box').addEventListener('keyup', function() {
+    let query = this.value;
+    let resultsContainer = document.getElementById('search-results');
+
+    if (query.length > 2) {
+        fetch(`/search/${query}`)
+            .then(response => response.json())
+            .then(data => {
+                resultsContainer.innerHTML = '';
+                if (data.length > 0) {
+                    data.forEach(game => {
+                        var game_id = game.game_id;
+                        resultsContainer.innerHTML += `
+                            <div class="search-result-item">
+                                <img src="${game.image}" alt="${game.title}" width="30" style="vertical-align: middle;">
+                                ${game.title}
+                            </div>
+                        `;
+                    });
+                    resultsContainer.style.display = 'block';  // Show the results
+                } else {
+                    resultsContainer.style.display = 'none';   // Hide if no results
+                }
+            });
+    } else {
+        resultsContainer.style.display = 'none';   // Hide if input is too short
+    }
+});
+
+// Optionally, close the dropdown when clicking elsewhere
+document.addEventListener('click', function(event) {
+    if (event.target.id !== 'search-box' && event.target.id !== 'search-results') {
+        document.getElementById('search-results').style.display = 'none';
+    }
+});
+
+    </script>
+{% endblock %}

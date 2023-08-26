@@ -84,6 +84,7 @@ class Game:
         self.__reviews: list = []
         self.__publisher = None
         self.__video_url = None
+        self.__screenshot = None
 
     @property
     def publisher(self) -> Publisher:
@@ -189,6 +190,17 @@ class Game:
             self.__video_url = video_url
         else:
             self.__video_url = None
+    
+    @property
+    def screenshot(self):
+        return self.__screenshot
+    
+    @screenshot.setter
+    def screenshot(self, screenshot: str):
+        if isinstance(screenshot, str) and screenshot.strip() != "":
+            self.__screenshot = screenshot
+        else:
+            self.__screenshot = None
 
     def add_genre(self, genre: Genre):
         if not isinstance(genre, Genre) or genre in self.__genres:

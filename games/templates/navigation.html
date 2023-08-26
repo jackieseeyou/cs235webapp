@@ -4,13 +4,16 @@
     </a>
     <header>
         <ul class="navbar">
-            <li><a href="{{url_for('home')}}"> Home</a></li>
-            <li><a href="{{url_for('games_page')}}">All Games</a></li>
+            <a class="logo" href="/">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="logo" width="240" height="60"/>
+            </a>
+            <li><a href="{{url_for('home_bp.home')}}"> Home</a></li>
+            <li><a href="{{url_for('games_bp.browse_games', page=1)}}">All Games</a></li>
             <li><a href="">Reviews</a></li>
             <li><a href="">Wishlist</a></li>
         </ul>
 
-        <h1>@Copyright kyao733 | jsie347 | mfu466</h1>
+        <p>@Copyright kyao733 | jsie347 | mfu466</p>
     </header> 
 
     </nav>
