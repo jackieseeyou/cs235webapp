@@ -2,12 +2,11 @@
 {% block title %} {{ game.title }} {% endblock %}
 {% block content %}
 <h1 id="title">{{game.title}}</h1>
-    <main>
-        <div class="container">
+    <div class="container">
             <div class="game__sidebar">
                 <img id="game__image" src="{{game.image_url}}" alt="{{game.title}}" />
                 <p><strong>Release Date:</strong> {{game.release_date}}</p>
-                <p><strong>Publisher:</strong> {{game.publisher}}</p>
+                <p><strong>Publisher:</strong> {{game.publisher.publisher_name}}</p>
             </div>
             <div class="game__video">
                 <video src="{{game.video_url}}" controls></video>
@@ -16,6 +15,5 @@
         <div class="game__about">
             <p><strong>About:</strong> {{game.description}}</p>
         </div>
-    </main>
 {% endblock %}
 

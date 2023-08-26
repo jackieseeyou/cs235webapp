@@ -3,18 +3,12 @@
 {% block title %} Games {% endblock %}
 
 {% block content %}
-<body>
-    <div>
-        <div class="search__container">
-            <input type="text" id="search-box" placeholder="Search games...">
-            <div id="search-results" class="search-dropdown"></div>
-    </div>
-    <div class="games__table">
-        <table>
+    <table class="games__table">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>TITLE</th>
+                    <th>Image</th>
+                    <th>Title</th>
                     <th>Release Date</th>
                 </tr>
             </thead>
@@ -24,8 +18,10 @@
                     <td>
                         {{ game.game_id }}
                     </td>
+                <td>
+                    <a href="{{ url_for('description_bp.description', game_id = game.game_id) }}"id="game-image"><img src="{{ game.image }}"></img></a>
+                </td>
                     <td>
-                        <a href="{{ url_for('description_bp.description', game_id = game.game_id) }}"id="game-image"><img src="{{ game.image }}"></img></a>
                         {{ game.title }}
                     </td>
                     <td>
@@ -35,7 +31,6 @@
                 {% endfor %}
             </tbody>
         </table>
-    </div>
         {% if page > 1 %}
         <a href="{{ url_for('games_bp.browse_games', page=page-1) }}">Previous</a>
     {% endif %}
@@ -46,8 +41,6 @@
         <a href="{{ url_for('games_bp.browse_games', page=page+1) }}">Next</a>
     {% endif %}
 
-    
-</body>
 
 <script>
     document.getElementById('search-box').addEventListener('keyup', function() {
