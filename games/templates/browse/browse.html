@@ -23,8 +23,7 @@
                 <tr>
                     <th>#</th>
                     <th>ID</th>
-                    <th>Image</th>
-                    <th>Title</th>
+                    <th>TITLE</th>
                     <th>Release Date</th>
                 </tr>
             </thead>
@@ -34,10 +33,8 @@
                     <td>
                         {{ game.game_id }}
                     </td>
-                <td>
-                    <a href="{{ url_for('description_bp.description', game_id = game.game_id) }}"id="game-image"><img src="{{ game.image }}"></img></a>
-                </td>
                     <td>
+                        <a href="{{ url_for('description_bp.description', game_id = game.game_id) }}"id="game-image"><img src="{{ game.image }}"></img></a>
                         {{ game.title }}
                     </td>
                     <td>

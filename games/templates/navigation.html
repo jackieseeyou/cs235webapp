@@ -1,18 +1,16 @@
 <nav> 
-    <a class="logo" href="/">
-        <img src="..\static\images\logo.png" alt="logo" width="240" height="60"/>
-    </a>
     <header>
         <ul class="navbar">
+            <a class="logo" href="/">
+                <img src="..\static\images\logo.png" alt="logo" width="240" height="60"/>
+            </a>
             <li><a href="{{url_for('home_bp.home')}}"> Home</a></li>
             <li><a href="{{url_for('games_bp.browse_games')}}">All Games</a></li>
             <li><a href="">Reviews</a></li>
             <li><a href="">Wishlist</a></li>
         </ul>
-        <div class="search__container">
-            <input type="text" id="search-box" placeholder="Search games...">
-            <div id="search-results" class="search-dropdown"></div>
-        </div>
+
+        <p>@Copyright kyao733 | jsie347 | mfu466</p>
     </header> 
 
     </nav>
