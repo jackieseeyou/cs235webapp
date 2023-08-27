@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{% extends 'games.html' %}
 
 {% block title %} Games {% endblock %}
 
@@ -31,6 +31,7 @@
                 {% endfor %}
             </tbody>
         </table>
+        <div class = "pages">
         {% if page > 1 %}
         <a href="{{ url_for('games_bp.browse_games', page=page-1) }}">Previous</a>
     {% endif %}
@@ -40,6 +41,7 @@
     {% if page < total_pages %}
         <a href="{{ url_for('games_bp.browse_games', page=page+1) }}">Next</a>
     {% endif %}
+        </div>
 
 
 <script>
