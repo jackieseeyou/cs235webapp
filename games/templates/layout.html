@@ -7,13 +7,15 @@
 </head>
 <title>{% block title %}{% endblock %}</title>
 <body class="body">
-    <div header>
+    <header>
     {% include 'navigation.html' %}
-    </div>
+    </header>
+
     <div class="content">
         {% block content %}{% endblock %}
     </div>
-    {% include 'footer.html' %}
+
+    <footer>{% include 'footer.html' %}</footer>
 </body>
 
 </html>

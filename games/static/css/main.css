@@ -26,14 +26,6 @@ li, a, button{
   text-decoration: none;
 } 
 
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items: center;
-  padding: 5px 20px;
-  background-color: #677bc4;
-}
-
 footer{
   display:flex;
   justify-content:space-between;
@@ -47,11 +39,13 @@ footer{
 .navbar{
   list-style-type: none;
   padding: 0;
-  margin: -20px;
-  display: flex;  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #677bc4;  
 }
 .navbar li{
-  display: inline-block;
+  display: flex;
   align-self: center;
   margin: 0 25px;
 }
@@ -206,6 +200,16 @@ main{
   color: #dcddde;
   text-decoration: none;
   margin: 20px;
+}
+
+.search__container{
+  display: inline-block;
+  padding: 20px;
+  width: 200px;
+}
+
+.search-result-item img{
+  width: 60px;
 }
 
 .search-result-item:hover {
