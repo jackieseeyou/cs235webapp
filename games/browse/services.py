@@ -12,7 +12,8 @@ def get_games(repo: AbstractRepository):
             'game_id': game.game_id,
             'image': game.image_url,
             'title': game.title,
-            'release_date': game.release_date
+            'release_date': game.release_date,
+            'price': game.price
         }
         game_dicts.append(game_dict)
     return game_dicts
