@@ -8,15 +8,6 @@
             <input type="text" id="search-box" placeholder="Search games...">
             <div id="search-results" class="search-dropdown"></div>
         </div>
-        <div class="genre__checkbox" style="max-height: 200px; overflow-y: auto;">
-            <form method="POST">
-                <div class="form-check">
-                {% for genre in genres %}
-                    <input type="checkbox" /> {{ genre.genre_name }} <br />
-                {% endfor %}
-                </div>
-            </form>
-        </div>
     <div class="games__table">
         <table>
             <thead>
@@ -62,10 +53,12 @@
                         var game_id = game.game_id;
                         var url = '/browse/' + game_id;
                         resultsContainer.innerHTML += `
-                            <a href=${url}><div class="search-result-item">
+                            <a href=${url}>
+                            <div class="search-result-item">
                                 <img src="${game.image}" alt="${game.title}">
                                 ${game.title}
-                            </div></a>
+                            </div>
+                            </a>
                         `;
                     });
                     resultsContainer.style.display = 'block';  // Show the results
