@@ -5,14 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/main.css" />
 </head>
-<title>{% block title %}{% endblock %}</title>
 <body class="body">
+<title>{% block title %}{% endblock %}</title>
     <div header>
     {% include 'navigation.html' %}
     </div>
+    <main>
     <div class="content">
         {% block content %}{% endblock %}
     </div>
+</main>
     {% include 'footer.html' %}
 </body>
 
