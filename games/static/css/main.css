@@ -251,3 +251,31 @@ main{
 
 }
 
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pagination a, .pagination span {
+  padding: 10px 20px;
+  margin: 0 2px;
+  border: 1px solid #ddd;
+  text-decoration: none;
+}
+
+.pagination a:hover {
+  background-color: #ddd;
+  color: #515151;
+}
+
+.pagination .active span {
+
+  color: white;
+  }
+
+.pagination .disabled span {
+  color: #ccc;
+  border: 1px solid #ccc;
+}

@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, render_template, Blueprint
+from flask import Flask, jsonify, render_template, Blueprint, request
+from flask_paginate import Pagination, get_page_parameter
 import games.adapters.repository as repo
 from games.browse import services
 browse_blueprint = Blueprint(
@@ -8,12 +9,16 @@ browse_blueprint = Blueprint(
 def browse_games():
     num_games = services.get_number_of_games(repo.repo_instance)
     all_games = services.get_games(repo.repo_instance)
+
+
+    page = (int(request.args.get('page', 1)))
+    per_page = 10
+    offset = (page - 1) * per_page
+    games = services.get_items(repo.repo_instance, offset, per_page)
+    pagination = Pagination(page=page, per_page=per_page, total=num_games)
+
     return render_template(
-        'browse/browse.html',
-        title=f"Browse Games | CS235 Game Library",
-        heading="Browse Games",
-        games=all_games,
-        num_games=num_games
+        'browse/browse.html', games=games, pagination=pagination
     )
 
 @browse_blueprint.route('/search/<query>', methods=['GET'])

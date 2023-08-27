@@ -17,6 +17,10 @@ def get_games(repo: AbstractRepository):
         game_dicts.append(game_dict)
     return game_dicts
 
+def get_items(repo, offset, per_page):
+    games = get_games(repo)
+    return games[offset: offset + per_page]
+
 def search_games(query, repo):
     games = get_games(repo)
     filtered_games = [game for game in games if query.lower() in game['title'].lower()]
