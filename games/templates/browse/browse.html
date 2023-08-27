@@ -19,8 +19,8 @@
                 </div>
             </form>
         </div>
-    <div class="games__table">
-        <table>
+    <div class="games__table__container">
+        <table class="games__table">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -36,8 +36,9 @@
                         {{ game.game_id }}
                     </td>
                     <td>
+                        <div id="game-link-container">
                         <a href="{{ url_for('description_bp.description', game_id = game.game_id) }}"id="game-image"><img src="{{ game.image }}"></img> {{ game.title }}</a>
-                        
+                        </div>
                     </td>
                     <td>
                         {{ game.release_date }}

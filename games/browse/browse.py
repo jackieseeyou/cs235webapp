@@ -13,7 +13,7 @@ def browse_games():
 
 
     page = (int(request.args.get('page', 1)))
-    per_page = 10
+    per_page = 5
     offset = (page - 1) * per_page
     games = services.get_items(repo.repo_instance, offset, per_page)
     pagination = Pagination(page=page, per_page=per_page, total=num_games)
