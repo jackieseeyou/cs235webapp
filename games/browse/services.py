@@ -31,3 +31,13 @@ def get_game(game_id, repo):
     if game is None:
         return None
     return game
+
+def get_genres(repo):
+    genres = repo.get_genres()
+    genre_names = [genre.genre_name for genre in genres]
+    return genre_names
+
+def get_games_by_genre(genres, repo):
+    games = get_games(repo)
+    filtered_games = [game for game in games if genres in game['genres']]
+    return filtered_games

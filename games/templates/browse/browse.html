@@ -8,7 +8,15 @@
         <div class="search__container">
             <input type="text" id="search-box" placeholder="Search games...">
             <div id="search-results" class="search-dropdown"></div>
-    </div>
+            <div class="genre__checkbox" style="max-height: 200px; overflow-y: auto;">
+                <form method="POST">
+                    <div class="form-check">
+                    {% for genre in genres %}
+                        <input type="checkbox" /> {{ genre.genre_name }} <br />
+                    {% endfor %}
+                    </div>
+                </form>
+            </div>
     <div class="games__table">
         <table>
             <thead>
@@ -36,8 +44,8 @@
                 {% endfor %}
             </tbody>
         </table>
-        {{ pagination.links }}
     </div>
+    {{ pagination.links }}
 </body>
 
 <script>
@@ -53,11 +61,12 @@
                 if (data.length > 0) {
                     data.forEach(game => {
                         var game_id = game.game_id;
+                        var url = '/browse/' + game_id;
                         resultsContainer.innerHTML += `
-                            <div class="search-result-item">
-                                <img src="${game.image}" alt="${game.title}" width="30" style="vertical-align: middle;">
+                            <a href=${url}><div class="search-result-item">
+                                <img src="${game.image}" alt="${game.title}" width="60" style="vertical-align: middle;">
                                 ${game.title}
-                            </div>
+                            </div></a>
                         `;
                     });
                     resultsContainer.style.display = 'block';  // Show the results
