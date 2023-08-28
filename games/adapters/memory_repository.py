@@ -28,7 +28,7 @@ class MemoryRepository(AbstractRepository):
     def get_number_of_games(self):
         return len(self.__games)
     
-    def get_genres(self):
+    def get_all_genres(self):
         return self.__genres
     
     def get_number_of_genres(self):
@@ -50,5 +50,6 @@ def populate(repo: AbstractRepository):
 
     for game in games:
         repo.add_game(game)
-        repo.add_genre(game.genres)
+        for genre in game.genres:
+            repo.add_genre(genre)
         repo.add_publisher(game.publisher)

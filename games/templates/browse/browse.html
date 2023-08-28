@@ -10,15 +10,16 @@
             <input type="text" id="search-box" placeholder="Search games...">
             <div id="search-results" class="search-dropdown"></div>
         </div>
-        <div class="genre__checkbox" style="max-height: 200px; overflow-y: auto;">
-            <form method="POST">
-                <div class="form-check">
-                {% for genre in genres %}
-                    <input type="checkbox" /> {{ genre.genre_name }} <br />
-                {% endfor %}
-                </div>
-            </form>
-        </div>
+
+    <div class="">
+
+        {% for genre in genres %}
+        <p>{{ genre }}</p>
+        
+        {% endfor %}
+    </div>
+
+
     <div class="games__table__container">
         <table class="games__table">
             <thead>

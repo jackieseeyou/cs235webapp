@@ -8,7 +8,6 @@ browse_blueprint = Blueprint(
 @browse_blueprint.route('/browse', methods=['GET'])
 def browse_games():
     num_games = services.get_number_of_games(repo.repo_instance)
-    all_games = services.get_games(repo.repo_instance)
     all_genres = services.get_genres(repo.repo_instance)
 
 
@@ -19,7 +18,7 @@ def browse_games():
     pagination = Pagination(page=page, per_page=per_page, total=num_games)
 
     return render_template(
-        'browse/browse.html', games=games, pagination=pagination, genre=all_genres
+        'browse/browse.html', games=games, pagination=pagination, genres=all_genres
     )
 
 @browse_blueprint.route('/search/<query>', methods=['GET'])
