@@ -8,20 +8,24 @@
 </head>
 <body id="body">
     {% include 'navigation.html' %} 
+    {% block content %}
+    <h1 id="title">{{game.title}}</h1>
     <main>
-        {% block content %}
-        <h1 id="title">{{game.title}}</h1>
-        <div class="game__description">
-            <img id="game__image", src={{game.image_url}} alt="{{game.title}}"></img>
-            <p><strong>Release Date:</strong> {{game.release_date}}</p>
+        <div class="container">
+            <div class="game__sidebar">
+                <img id="game__image" src="{{game.image_url}}" alt="{{game.title}}" />
+                <p><strong>Release Date:</strong> {{game.release_date}}</p>
+                <p><strong>Publisher:</strong> {{game.publisher}}</p>
+            </div>
+            <div class="game__video">
+                <video src="{{game.video_url}}" controls></video>
+            </div>
+        </div>
+        <div class="game__about">
             <p><strong>About:</strong> {{game.description}}</p>
         </div>
-        <video src="{{game.video_url}}" controls></video>
-        {% endblock %}
     </main>
-    
+    {% endblock %}    
     {% include 'footer.html' %}
-    
 </body>
-
 </html>

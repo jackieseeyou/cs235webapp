@@ -22,6 +22,9 @@ def create_app():
         from .home import home
         app.register_blueprint(home.home_blueprint)
 
+        from .description import description
+        app.register_blueprint(description.description_blueprint)
+
     repo.repo_instance = MemoryRepository()
     populate(repo.repo_instance)
 
