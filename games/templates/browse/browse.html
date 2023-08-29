@@ -4,24 +4,38 @@
 
 <body>
     {% block sidebar_content %}
-<div class="search_filter_container">
     <div class="search__container">
         <input type="text" class="search_bar" id="search-box" placeholder="Search games...">
         <div id="search-results" class="search-dropdown"></div>
+
+        <div class="filter-container" id="genre-search-container">
+            <input type="text" class="search_bar" id="genre-bar" placeholder="Search genres...">
+            <ul id="genre-filter-dropdown" class="filter-dropdown">
+                {% for genre in genres%}
+                <li>
+                    <input type="checkbox" id="{{ genre.genre_name }}" name="{{ genre.genre_name }}" value="{{ genre.genre_name }}">
+                    <label for="{{ genre.genre_name }}">{{ genre.genre_name }}</label>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="filter-container" id="publisher-search-container">
+            <input type="text" class="search_bar" id="publisher-bar" placeholder="Search publishers...">
+            <ul id="publisher-filter-dropdown" class="filter-dropdown">
+                {% for publisher in publishers %}
+                <li>
+                <a>{{publisher.publisher_name}}</a>
+                </li>
+                {% endfor %}
+            </ul>
+
+        </div>
     </div>
-        <div id="genre-search-container">
-        <input type="text" class="search_bar" id="genre-bar" placeholder="Search genres...">
-        <ul id="genre-filter-dropdown" class="dropdown">
-            {% for genre in genres%}
-            <li>
-                <input type="checkbox" id="{{ genre.genre_name }}" name="{{ genre.genre_name }}" value="{{ genre.genre_name }}">
-                <label for="{{ genre.genre_name }}">{{ genre.genre_name }}</label>
-            </li>
-            {% endfor %}
-        </ul>
+    <div id="filter-buttons">
+    <button class="filter-button" id="apply-filters">apply filter(s)</button>
+    <button class="filter-button" id="clear-filters">clear filter(s)</button>
     </div>
-    <button id="apply-filters">apply filter(s)</button>
-</div>
     {% endblock %}
 
     {% block content %}
@@ -63,7 +77,7 @@
 
 <script>
     document.getElementById('search-box').addEventListener('keyup', function() {
-    let query = this.value;
+    let query = document.getElementById('search-box').value;
     let resultsContainer = document.getElementById('search-results');
 
     if (query.length > 2) {
@@ -93,24 +107,26 @@
     }
 });
 
-// Optionally, close the dropdown when clicking elsewhere
-document.addEventListener('click', function(event) {
-    if (event.target.id !== 'search-box' && event.target.id !== 'search-results') {
-        document.getElementById('search-results').style.display = 'none';
-    };
-});
-
 
     document.getElementById('genre-bar').addEventListener('click', function() {
     document.getElementById('genre-filter-dropdown').style.display = 'block';
 });
 
+document.getElementById('publisher-bar').addEventListener('click', function() {
+    document.getElementById('publisher-filter-dropdown').style.display = 'block';
+});
+
 document.addEventListener('click', function(event) {
-    var filterDropdown = document.getElementById('genre-filter-dropdown');
-    var isClickInsideFilterDropdown = filterDropdown.contains(event.target);
-    if (event.target.id !== 'search-box' && event.target.id !== 'search-results' && event.target.id !== 'genre-bar' && !isClickInsideFilterDropdown) {
+    var genreFilterDropdown = document.getElementById('genre-filter-dropdown');
+    var publisherFilterDropdown = document.getElementById('publisher-filter-dropdown');
+    var isClickInsideGenreFilterDropdown = genreFilterDropdown.contains(event.target);
+    var isClickInsidePublisherFilterDropdown = publisherFilterDropdown.contains(event.target);
+    
+    if (event.target.id !== 'search-box' && event.target.id !== 'search-results' && event.target.id !== 'genre-bar' && !isClickInsideGenreFilterDropdown && event.target.id !== 'publisher-bar' && !isClickInsidePublisherFilterDropdown) {
         document.getElementById('search-results').style.display = 'none';
-        filterDropdown.style.display = 'none';
+        genreFilterDropdown.style.display = 'none';
+        publisherFilterDropdown.style.display = 'none';
+        document.getElementById('genre-bar').value = selectedGenres.join(', ');
     }
 });
 
@@ -124,16 +140,23 @@ document.getElementById('apply-filters').addEventListener('click', function() {
         }
     });
 
+    if (selectedGenres.length > 0){
     var url = '/browse?page=1&genres=' + selectedGenres.join(',');
-
     window.location.href = url;
+    }
 });
 
-document.getElementById('genre-bar').addEventListener('keyup', function() {
+document.getElementById('clear-filters').addEventListener('click', function(){
+    selectedGenres = [];
+    window.location.href = '/browse';
+
+})
+
+function search_filter(elementID, dropdownID){
     var input, filter, ul, li, a, i;
-  input = document.getElementById("genre-bar");
+  input = document.getElementById(elementID);
   filter = input.value.toUpperCase();
-  div = document.getElementById("genre-filter-dropdown");
+  div = document.getElementById(dropdownID);
   a = div.getElementsByTagName("li");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -142,10 +165,13 @@ document.getElementById('genre-bar').addEventListener('keyup', function() {
     } else {
       a[i].style.display = "none";
     }
-  }
 
-    
-});
+}
+}
+
+document.getElementById('genre-bar').addEventListener('keyup', function() {
+    search_filter('genre-bar', 'genre-filter-dropdown');
+});    
 
 
     </script>

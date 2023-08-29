@@ -14,7 +14,7 @@
     "left-sidebar content right-sidebar"
     "footer footer footer ";
   height: 100vh;
-  width: 100vw;
+  width: 80vw;
   margin-left: auto;
   margin-right: auto;
 }
@@ -136,7 +136,7 @@ footer{
   margin-left: auto;
   margin-right: auto;
   width: 100%;
-  height: 75vh;
+  height: 90vh;
   overflow-y: auto;
 }
 
@@ -222,6 +222,7 @@ footer{
 }
 
 .sidebar-content{
+  height: 70vh;
   padding-top: 20px;
   padding-bottom: 20px;
   font-size: 12px;
@@ -229,15 +230,28 @@ footer{
   color: #dcddde;
   text-decoration: none;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   text-align: center;
   transition: all 0.3s ease 0s;
 }
 
 .search__container{
   position: relative;
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
   width: 240px;
+  height: 100%;
+  row-gap: 200px;
+  align-items: center;
+  justify-content:space-evenly;
+}
+
+.search_bar{
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  row-gap: 200px;
+  justify-content:space-evenly;
 }
 
 .search-result-item {
@@ -256,18 +270,14 @@ footer{
   display: none;
   position: absolute;
   background-color: #f0f0f0;
-  max-width: 30vw;
+  max-width: 200px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 10;
 }
 
-.search_bar{
-  width: 60%;
-  padding: 10px;
-  box-sizing: border-box;
-}
 .search_filter_container{
   width: 240px;
+  height: 100%;
   display: inline-block;
   justify-content: space-between;
 }
@@ -318,10 +328,11 @@ footer{
   border-color: #515151;
 }
 
-#genre-search-container {
+.filter-container {
   position: relative;
   text-align: center;
-  width: 240px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 #genre-search-container input[type="text"] {
@@ -330,37 +341,42 @@ footer{
   box-sizing: border-box;
 }
 
-#genre-bar {
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.dropdown {
+.filter-dropdown {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
   text-align: left;
   width: 100%;
-  height: 300px;
+  height: 200px;
   overflow-y: auto;
   border: 1px solid #ccc;
-  padding: 10px;
-  background: #fff;
+  background:#36393f;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-#filter-dropdown input[type="checkbox"] {
+.filter-dropdown input[type="checkbox"] {
   margin-right: 10px;
 }
 
-#filter-dropdown input[type="checkbox"] + label {
+.filter-dropdown input[type="checkbox"] + label {
   display: inline-block;
   width: calc(100% - 26px);
 }
 
-#filter-dropdown li:hover{
+.filter-dropdown li:hover{
   background-color: #dcddde;
   color: #515151;
+}
+
+.filter-button{
+  background-color: #515151;
+  color: #dcddde;
+  border: 1px solid #515151;
+  border-radius: 0;
+  margin: 0 5px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  height: 30px;
 }

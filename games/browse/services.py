@@ -14,7 +14,8 @@ def get_games(repo: AbstractRepository):
             'title': game.title,
             'release_date': game.release_date,
             'price': game.price,
-            'genres': game.genres
+            'genres': [genre.genre_name for genre in game.genres],
+            'publisher': game.publisher.publisher_name
         }
         game_dicts.append(game_dict)
     return game_dicts
@@ -44,6 +45,6 @@ def get_publishers(repo):
 
 def get_games_by_genre(selected_genres, repo):
     games = get_games(repo)
-    filtered_games = [game for game in games if any(genre.genre_name in selected_genres for genre in game['genres'])]
+    filtered_games = [game for game in games if any(genre in selected_genres for genre in game['genres'])]
 
     return filtered_games
