@@ -45,4 +45,5 @@ def get_publishers(repo):
 def get_games_by_genre(selected_genres, repo):
     games = get_games(repo)
     filtered_games = [game for game in games if any(genre.genre_name in selected_genres for genre in game['genres'])]
+
     return filtered_games
