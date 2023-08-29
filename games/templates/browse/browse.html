@@ -2,25 +2,48 @@
 
 {% block title %} Games {% endblock %}
 
-{% block content %}
-<head>
-</head>
 <body>
+    {% block sidebar_content %}
+    <div class="search_filter_container">
         <div class="search__container">
             <input type="text" id="search-box" placeholder="Search games...">
             <div id="search-results" class="search-dropdown"></div>
         </div>
 
-    <div class="">
+        <p><strong>Genres:</strong></p>
+        <div class="genre_filter_container">
+            <form>
+                <ul>
+                    {% for genre in genres %}
+                    <li>
+                        <input type="checkbox" id="{{ genre }}" name="{{ genre.genre_name }}" value="{{ genre.genre_name }}">
+                        <label for="{{ genre.genre_name }}">{{ genre }}</label>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </form>
 
-        
-        {% for genre in genres %}
-        <p>{{ genre }}</p>
-        
-        {% endfor %}
+
+        </div>
+        <div class="publisher_filter_container">
+            <form>
+                <ul>
+                    {% for publisher in publishers %}
+                    <li>
+                        <input type="checkbox" id="{{ publisher }}" name="{{ publisher }}" value="{{ publisher }}">
+                        <label for="{{ publisher }}">{{ publisher }}</label>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </form>
+            
+        </div>
     </div>
 
+    <button>apply filter(s)</button>
+    {% endblock %}
 
+    {% block content %}
     <div class="games__table__container">
         <table class="games__table">
             <thead>
@@ -76,7 +99,7 @@
                                 <img src="${game.image}" alt="${game.title}" width="100px">
                                 ${game.title}
                             </div></a>
-                        `;
+                        ;
                     });
                     resultsContainer.style.display = 'block';  // Show the results
                 } else {

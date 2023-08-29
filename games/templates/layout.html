@@ -5,18 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="../static/css/main.css" />
+    <title>{% block title %}{% endblock %}</title>
 </head>
-<title>{% block title %}{% endblock %}</title>
+
 <body class="body">
-    <header>
-    {% include 'navigation.html' %}
-    </header>
+    <div class="body-wrapper">
+        <header>
+            {% include 'navigation.html' %}
+        </header>
+        <div class="left-sidebar">
+            <a class="logo" href="/">
+                <img src="..\static\images\logo.png" alt="logo" width="240" height="60"/>
+            </a>
+            <div class="sidebar-content">
+            {% block sidebar_content %} {% endblock %}
+            </div>
+        </div>
 
-    <div class="content">
-        {% block content %}{% endblock %}
+        <div class="content">
+            {% block content %}{% endblock %}
+        </div>
+        <div class="right-sidebar"></div>
+
+        <footer>{% include 'footer.html' %}</footer>
     </div>
-
-    <footer>{% include 'footer.html' %}</footer>
 </body>
 
 </html>
