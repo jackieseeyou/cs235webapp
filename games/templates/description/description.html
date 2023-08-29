@@ -1,5 +1,8 @@
 {% extends 'layout.html' %}
 {% block title %} {{ game.title }} {% endblock %}
+{% block sidebar_content %}
+<a href="{{url_for('games_bp.browse_games')}}"> go back</a>
+{% endblock %}
 {% block content %}
 <h1 id="title">{{game.title}}</h1>
     <main>
@@ -16,7 +19,11 @@
             </p>
             </div>
             <div class="game__video">
+                {% if game.video_url %}
                 <video src="{{game.video_url}}" controls></video>
+                {% else %}
+                <p>No video available</p>
+                {% endif %}
             </div>
         </div>
         <div class="game__about">

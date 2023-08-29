@@ -35,13 +35,11 @@ def get_game(game_id, repo):
 
 def get_genres(repo):
     genres = repo.get_all_genres()
-    genre_names = [genre.genre_name for genre in genres]
-    return genre_names
+    return genres
 
 def get_publishers(repo):
     publishers = repo.get_publishers()
-    publisher_names = [publisher.publisher_name for publisher in publishers]
-    return publisher_names
+    return publishers
 
 def get_games_by_genre(genres, repo):
     games = get_games(repo)

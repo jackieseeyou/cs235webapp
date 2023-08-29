@@ -4,43 +4,25 @@
 
 <body>
     {% block sidebar_content %}
-    <div class="search_filter_container">
-        <div class="search__container">
-            <input type="text" id="search-box" placeholder="Search games...">
-            <div id="search-results" class="search-dropdown"></div>
-        </div>
-
-        <p><strong>Genres:</strong></p>
-        <div class="genre_filter_container">
-            <form>
-                <ul>
-                    {% for genre in genres %}
-                    <li>
-                        <input type="checkbox" id="{{ genre }}" name="{{ genre.genre_name }}" value="{{ genre.genre_name }}">
-                        <label for="{{ genre.genre_name }}">{{ genre }}</label>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </form>
-
-
-        </div>
-        <div class="publisher_filter_container">
-            <form>
-                <ul>
-                    {% for publisher in publishers %}
-                    <li>
-                        <input type="checkbox" id="{{ publisher }}" name="{{ publisher }}" value="{{ publisher }}">
-                        <label for="{{ publisher }}">{{ publisher }}</label>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </form>
-            
-        </div>
+<div class="search_filter_container">
+    <div class="search__container">
+        <input type="text" class="search_bar" id="search-box" placeholder="Search games...">
+        <div id="search-results" class="search-dropdown"></div>
     </div>
 
-    <button>apply filter(s)</button>
+    <div id="genre-search-container">
+        <input type="text" class="search_bar" id="genre-bar" placeholder="Search genres...">
+        <ul id="filter-dropdown" class="dropdown">
+            {% for genre in genres%}
+            <li>
+                <input type="checkbox" id="{{ genre.genre_name }}" name="{{ genre.genre_name }}" value="{{ genre.genre_name }}">
+                <label for="{{ genre.genre_name }}">{{ genre.genre_name }}</label>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <button id="apply-filters">apply filter(s)</button>
+</div>
     {% endblock %}
 
     {% block content %}
@@ -94,12 +76,13 @@
                     data.forEach(game => {
                         var game_id = game.game_id;
                         var url = '/browse/' + game_id;
-                        resultsContainer.innerHTML += `
-                            <a href=${url}><div class="search-result-item">
+                        resultsContainer.innerHTML += 
+                        `
+                            <a href=${ url }><div class="search-result-item">
                                 <img src="${game.image}" alt="${game.title}" width="100px">
                                 ${game.title}
                             </div></a>
-                        ;
+                        `
                     });
                     resultsContainer.style.display = 'block';  // Show the results
                 } else {
@@ -115,8 +98,24 @@
 document.addEventListener('click', function(event) {
     if (event.target.id !== 'search-box' && event.target.id !== 'search-results') {
         document.getElementById('search-results').style.display = 'none';
+    };
+});
+
+
+    document.getElementById('genre-bar').addEventListener('click', function() {
+    document.getElementById('filter-dropdown').style.display = 'block';
+});
+
+document.addEventListener('click', function(event) {
+    var filterDropdown = document.getElementById('filter-dropdown');
+    var isClickInsideFilterDropdown = filterDropdown.contains(event.target);
+    if (event.target.id !== 'search-box' && event.target.id !== 'search-results' && event.target.id !== 'genre-bar' && !isClickInsideFilterDropdown) {
+        document.getElementById('search-results').style.display = 'none';
+        filterDropdown.style.display = 'none';
     }
 });
+
+
 
     </script>
 {% endblock %}
