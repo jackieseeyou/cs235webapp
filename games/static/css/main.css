@@ -243,7 +243,7 @@ footer{
   height: 100%;
   row-gap: 200px;
   align-items: center;
-  justify-content:space-evenly;
+  justify-content:center;
 }
 
 .search_bar{
@@ -252,6 +252,9 @@ footer{
   width: 80%;
   row-gap: 200px;
   justify-content:space-evenly;
+}
+.search-results{
+  position:absolute;
 }
 
 .search-result-item {
@@ -278,8 +281,9 @@ footer{
 .search_filter_container{
   width: 240px;
   height: 100%;
-  display: inline-block;
-  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .genre_filter_container{

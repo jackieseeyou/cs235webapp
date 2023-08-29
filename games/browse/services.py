@@ -48,3 +48,15 @@ def get_games_by_genre(selected_genres, repo):
     filtered_games = [game for game in games if any(genre in selected_genres for genre in game['genres'])]
 
     return filtered_games
+
+def get_games_by_publisher(selected_publisher, repo):
+    games = get_games(repo)
+    filtered_games = [game for game in games if game['publisher'] == selected_publisher]
+
+    return filtered_games
+
+def get_games_by_genre_and_publisher(selected_genres, selected_publisher, repo):
+    genre_games = get_games_by_genre(selected_genres, repo)
+    filtered_games = [game for game in genre_games if game['publisher'] == selected_publisher]
+
+    return filtered_games

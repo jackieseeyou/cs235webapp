@@ -14,10 +14,18 @@ def browse_games():
     per_page = 5
     offset = (page - 1) * per_page
     selected_genres = request.args.getlist('genres')
+    selected_publisher = request.args.get('publisher')
+    total_games = 0
 
-    if selected_genres:
+    if selected_genres and selected_publisher:
+        games = services.get_games_by_genre_and_publisher(selected_genres, selected_publisher, repo.repo_instance)[offset: offset + per_page]
+        total_games = len(services.get_games_by_genre_and_publisher(selected_genres, selected_publisher, repo.repo_instance))
+    elif selected_genres:
         games = services.get_games_by_genre(selected_genres, repo.repo_instance)[offset: offset + per_page]
         total_games = len(services.get_games_by_genre(selected_genres, repo.repo_instance))
+    elif selected_publisher:
+        games = services.get_games_by_publisher(selected_publisher, repo.repo_instance)[offset: offset + per_page]
+        total_games += len(services.get_games_by_publisher(selected_publisher, repo.repo_instance))
     else:
         games = services.get_items(repo.repo_instance, offset, per_page)
         total_games = services.get_number_of_games(repo.repo_instance)

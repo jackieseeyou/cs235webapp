@@ -25,7 +25,8 @@
             <ul id="publisher-filter-dropdown" class="filter-dropdown">
                 {% for publisher in publishers %}
                 <li>
-                <a>{{publisher.publisher_name}}</a>
+                    <input type="radio" id="{{ publisher.publisher_name }}" name="publisher" value="{{ publisher.publisher_name }}">
+                    <label for="{{ publisher.publisher_name }}">{{ publisher.publisher_name }}</label>
                 </li>
                 {% endfor %}
             </ul>
@@ -40,6 +41,8 @@
 
     {% block content %}
     <div class="games__table__container">
+        {% if games|length >
+             0 %}
         <table class="games__table">
             <thead>
                 <tr>
@@ -71,6 +74,9 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% else %}
+        <p>No games found. Please change filters.</p>
+        {% endif %}
     </div>
     {{ pagination.links }}
 </body>
@@ -132,6 +138,7 @@ document.addEventListener('click', function(event) {
 
 document.getElementById('apply-filters').addEventListener('click', function() {
     var selectedGenres = [];
+    var selectedPublisher = document.querySelector('#publisher-filter-dropdown input[type="radio"]:checked');
     var checkboxes = document.querySelectorAll('#genre-filter-dropdown input[type="checkbox"]');
     
     checkboxes.forEach(function(checkbox) {
@@ -140,14 +147,23 @@ document.getElementById('apply-filters').addEventListener('click', function() {
         }
     });
 
+    if (selectedGenres.length > 0 || selectedPublisher) {
+    var url = '/browse?page=1';
     if (selectedGenres.length > 0){
-    var url = '/browse?page=1&genres=' + selectedGenres.join(',');
-    window.location.href = url;
+        url += '&genres=' + selectedGenres.join(',');
     }
+    if (selectedPublisher){
+        url += '&publisher=' + selectedPublisher.id;
+    }
+}
+
+    window.location.href = url;
 });
+
 
 document.getElementById('clear-filters').addEventListener('click', function(){
     selectedGenres = [];
+    selectedPublisher = null;
     window.location.href = '/browse';
 
 })
