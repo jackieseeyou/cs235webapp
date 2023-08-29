@@ -30,10 +30,31 @@
 li, a, button{
   font-family: 'Roboto', sans-serif, cursive;
   font-size: 14px;
+
   line-height: 1.5;
   font-weight: 600;
   color: #dcddde;
   text-decoration: none;
+
+} 
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items: left;
+  padding: 5px 20px;
+  background-color: #677bc4;
+  height: 50px;
+}
+
+footer{
+  display:flex;
+  justify-content:space-between;
+  align-items: center;
+  padding: 5px 20px;
+  background-color: #677bc4;
+  height: 40px;
+  margin-top: -5px;
 }
 
 .navbar{
