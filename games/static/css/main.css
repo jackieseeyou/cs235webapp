@@ -162,10 +162,9 @@ footer{
 
 #game-link-container{
   display: flex;
-  justify-content: center;
   align-items: center;
   text-decoration: none;
-  width: 360px;
+  width: 100%;
   height: 200px;
 }
 
@@ -175,6 +174,8 @@ footer{
 }
 
 #game-link-container a{
+  display: flex;
+  align-items: center;
   text-decoration: none;
   transition: all 0.3s ease;
 }
@@ -319,7 +320,14 @@ footer{
 
 #genre-search-container {
   position: relative;
-  width: 200px;
+  text-align: center;
+  width: 240px;
+}
+
+#genre-search-container input[type="text"] {
+
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 #genre-bar {
@@ -344,11 +352,15 @@ footer{
 }
 
 #filter-dropdown input[type="checkbox"] {
-  vertical-align: top;
   margin-right: 10px;
 }
 
 #filter-dropdown input[type="checkbox"] + label {
   display: inline-block;
   width: calc(100% - 26px);
+}
+
+#filter-dropdown li:hover{
+  background-color: #dcddde;
+  color: #515151;
 }

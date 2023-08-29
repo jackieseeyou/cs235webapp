@@ -9,10 +9,9 @@
         <input type="text" class="search_bar" id="search-box" placeholder="Search games...">
         <div id="search-results" class="search-dropdown"></div>
     </div>
-
-    <div id="genre-search-container">
+        <div id="genre-search-container">
         <input type="text" class="search_bar" id="genre-bar" placeholder="Search genres...">
-        <ul id="filter-dropdown" class="dropdown">
+        <ul id="genre-filter-dropdown" class="dropdown">
             {% for genre in genres%}
             <li>
                 <input type="checkbox" id="{{ genre.genre_name }}" name="{{ genre.genre_name }}" value="{{ genre.genre_name }}">
@@ -103,11 +102,11 @@ document.addEventListener('click', function(event) {
 
 
     document.getElementById('genre-bar').addEventListener('click', function() {
-    document.getElementById('filter-dropdown').style.display = 'block';
+    document.getElementById('genre-filter-dropdown').style.display = 'block';
 });
 
 document.addEventListener('click', function(event) {
-    var filterDropdown = document.getElementById('filter-dropdown');
+    var filterDropdown = document.getElementById('genre-filter-dropdown');
     var isClickInsideFilterDropdown = filterDropdown.contains(event.target);
     if (event.target.id !== 'search-box' && event.target.id !== 'search-results' && event.target.id !== 'genre-bar' && !isClickInsideFilterDropdown) {
         document.getElementById('search-results').style.display = 'none';
@@ -115,6 +114,38 @@ document.addEventListener('click', function(event) {
     }
 });
 
+document.getElementById('apply-filters').addEventListener('click', function() {
+    var selectedGenres = [];
+    var checkboxes = document.querySelectorAll('#genre-filter-dropdown input[type="checkbox"]');
+    
+    checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+            selectedGenres.push(checkbox.id);
+        }
+    });
+
+    var url = '/browse?page=1&genres=' + selectedGenres.join(',');
+
+    window.location.href = url;
+});
+
+document.getElementById('genre-bar').addEventListener('keyup', function() {
+    var input, filter, ul, li, a, i;
+  input = document.getElementById("genre-bar");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("genre-filter-dropdown");
+  a = div.getElementsByTagName("li");
+  for (i = 0; i < a.length; i++) {
+    txtValue = a[i].textContent || a[i].innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      a[i].style.display = "";
+    } else {
+      a[i].style.display = "none";
+    }
+  }
+
+    
+});
 
 
     </script>
