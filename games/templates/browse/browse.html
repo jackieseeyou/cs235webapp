@@ -4,10 +4,6 @@
 
 <body>
     {% block sidebar_content %}
-    <div class="search__container">
-        <input type="text" class="search_bar" id="search-box" placeholder="Search games...">
-        <div id="search-results" class="search-dropdown"></div>
-
         <div class="filter-container" id="genre-search-container">
             <input type="text" class="search_bar" id="genre-bar" placeholder="Search genres...">
             <ul id="genre-filter-dropdown" class="filter-dropdown">
@@ -32,11 +28,15 @@
             </ul>
 
         </div>
-    </div>
+
+
     <div id="filter-buttons">
-    <button class="filter-button" id="apply-filters">apply filter(s)</button>
-    <button class="filter-button" id="clear-filters">clear filter(s)</button>
+        <button class="filter-button" id="apply-filters">apply filter(s)</button>
+        <button class="filter-button" id="clear-filters">clear filter(s)</button>
+        <div id="selected-Genres"></div>
+        <div id="selected-Publishers"></div>
     </div>
+
     {% endblock %}
 
     {% block content %}
@@ -82,38 +82,8 @@
 </body>
 
 <script>
-    document.getElementById('search-box').addEventListener('keyup', function() {
-    let query = document.getElementById('search-box').value;
-    let resultsContainer = document.getElementById('search-results');
 
-    if (query.length > 2) {
-        fetch(`/search/${query}`)
-            .then(response => response.json())
-            .then(data => {
-                resultsContainer.innerHTML = '';
-                if (data.length > 0) {
-                    data.forEach(game => {
-                        var game_id = game.game_id;
-                        var url = '/browse/' + game_id;
-                        resultsContainer.innerHTML += 
-                        `
-                            <a href=${ url }><div class="search-result-item">
-                                <img src="${game.image}" alt="${game.title}" width="100px">
-                                ${game.title}
-                            </div></a>
-                        `
-                    });
-                    resultsContainer.style.display = 'block';  // Show the results
-                } else {
-                    resultsContainer.style.display = 'none';   // Hide if no results
-                }
-            });
-    } else {
-        resultsContainer.style.display = 'none';   // Hide if input is too short
-    }
-});
-
-
+    
     document.getElementById('genre-bar').addEventListener('click', function() {
     document.getElementById('genre-filter-dropdown').style.display = 'block';
 });
@@ -130,12 +100,12 @@ document.addEventListener('click', function(event) {
     
     if (event.target.id !== 'search-box' && event.target.id !== 'search-results' && event.target.id !== 'genre-bar' && !isClickInsideGenreFilterDropdown && event.target.id !== 'publisher-bar' && !isClickInsidePublisherFilterDropdown) {
         document.getElementById('search-results').style.display = 'none';
+
+
         genreFilterDropdown.style.display = 'none';
         publisherFilterDropdown.style.display = 'none';
-        document.getElementById('genre-bar').value = selectedGenres.join(', ');
     }
 });
-
 document.getElementById('apply-filters').addEventListener('click', function() {
     var selectedGenres = [];
     var selectedPublisher = document.querySelector('#publisher-filter-dropdown input[type="radio"]:checked');
@@ -148,25 +118,28 @@ document.getElementById('apply-filters').addEventListener('click', function() {
     });
 
     if (selectedGenres.length > 0 || selectedPublisher) {
-    var url = '/browse?page=1';
-    if (selectedGenres.length > 0){
-        url += '&genres=' + selectedGenres.join(',');
+        var url = '/browse?page=1';
+        if (selectedGenres.length > 0){
+            url += '&genres=' + selectedGenres.join(',');
+        }
+        if (selectedPublisher){
+            url += '&publisher=' + selectedPublisher.id;
+        }
+        window.location.href = url;
     }
-    if (selectedPublisher){
-        url += '&publisher=' + selectedPublisher.id;
-    }
-}
 
-    window.location.href = url;
+    updateSelectedFilters();
 });
+
 
 
 document.getElementById('clear-filters').addEventListener('click', function(){
     selectedGenres = [];
     selectedPublisher = null;
     window.location.href = '/browse';
+    updateSelectedFilters();
+});
 
-})
 
 function search_filter(elementID, dropdownID){
     var input, filter, ul, li, a, i;
@@ -192,6 +165,34 @@ document.getElementById('genre-bar').addEventListener('keyup', function() {
 document.getElementById('publisher-bar').addEventListener('keyup', function() {
     search_filter('publisher-bar', 'publisher-filter-dropdown');
 });
+
+function updateSelectedFilters() {
+    var selectedGenres = [];
+    var selectedPublisher = document.querySelector('#publisher-filter-dropdown input[type="radio"]:checked');
+    var checkboxes = document.querySelectorAll('#genre-filter-dropdown input[type="checkbox"]');
+    var selectedGenresDiv = document.getElementById('selected-Genres');
+    var selectedPublishersDiv = document.getElementById('selected-Publishers');
+    
+    checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+            selectedGenres.push(checkbox.value);
+        }
+    });
+
+    selectedGenresDiv.innerHTML = 'Selected Genres: ' + (selectedGenres.length > 0 ? selectedGenres.join(', ') : 'None');
+    selectedPublishersDiv.innerHTML = 'Selected Publisher: ' + (selectedPublisher ? selectedPublisher.value : 'None');
+}
+
+document.querySelectorAll('#genre-filter-dropdown input[type="checkbox"]').forEach(function(checkbox) {
+    checkbox.addEventListener('change', updateSelectedFilters);
+});
+
+document.querySelectorAll('#publisher-filter-dropdown input[type="radio"]').forEach(function(radio) {
+    radio.addEventListener('change', updateSelectedFilters);
+});
+
+
+
 
 
     </script>
