@@ -5,11 +5,8 @@ import games.adapters.repository as repo
 from games.adapters.memory_repository import MemoryRepository, populate
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 
-# TODO: Access to the games should be implemented via the repository pattern and using blueprints, so this can not
-#  stay here!
 
-
-def create_app():
+def create_app(test_config=None):
     """Construct the core application."""
 
     # Create the Flask app object.
@@ -24,6 +21,9 @@ def create_app():
 
         from .description import description
         app.register_blueprint(description.description_blueprint)
+
+        from .searchBar import searchBar
+        app.register_blueprint(searchBar.search_blueprint)
 
     repo.repo_instance = MemoryRepository()
     populate(repo.repo_instance)
