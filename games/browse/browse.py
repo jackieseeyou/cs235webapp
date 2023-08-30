@@ -29,7 +29,7 @@ def browse_games():
                 if genre not in all_genre_names:
                     abort(400, description=f"{genre} is not a valid genre.")
         
-    if selected_genres and selected_publisher:    
+    if selected_genres and selected_publisher:
         games = browseServices.get_games_by_genre_and_publisher(selected_genres, selected_publisher, repo.repo_instance)[offset: offset + per_page]
         total_games = len(browseServices.get_games_by_genre_and_publisher(selected_genres, selected_publisher, repo.repo_instance))
     elif selected_genres:
@@ -46,6 +46,7 @@ def browse_games():
         abort(400, description=f"The page number must be positive and less than {total_games//per_page + 1}.")
     pagination = Pagination(page=page, per_page=per_page, total=total_games)
 
+    
     return render_template(
         'browse/browse.html', games=games, pagination=pagination, genres=all_genres, publishers=all_publishers
     )

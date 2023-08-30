@@ -18,7 +18,8 @@ def get_games(repo: AbstractRepository):
             'publisher': game.publisher.publisher_name
         }
         game_dicts.append(game_dict)
-    return game_dicts
+    res = sorted(game_dicts, key=lambda x: x['title'])
+    return res
 
 def get_items(repo, offset, per_page):
     games = get_games(repo)
