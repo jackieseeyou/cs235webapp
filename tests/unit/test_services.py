@@ -1,6 +1,4 @@
 import pytest
-from unittest.mock import Mock
-
 from games import create_app
 
 
@@ -62,6 +60,9 @@ def test_browse_games(client):
         response = client.get('/browse?page=-1&genres=Invalid&publisher=Invalid')
         assert response.status_code == 400
 
+def test_pagination(client):
+    with client:
+        response = client.get('/browse?page=1')
 
 
 def test_home_page(client):
@@ -83,4 +84,5 @@ def test_description_page(client):
         # test the route with invalid integer input
         response = client.get('/browse/123')
         assert response.status_code == 404
+
 

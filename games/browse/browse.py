@@ -21,13 +21,14 @@ def browse_games():
     total_games = 0
 
 
-
-    if selected_publisher not in all_publisher_names:
-        abort(400, description=f"{selected_publisher} is not a valid publisher.")
-    for genre in selected_genres:
-            if genre not in all_genre_names:
-                abort(400, description=f"{genre} is not a valid genre.")
-    
+    if selected_publisher:
+        if selected_publisher not in all_publisher_names:
+            abort(400, description=f"{selected_publisher} is not a valid publisher.")
+    if selected_genres:
+        for genre in selected_genres:
+                if genre not in all_genre_names:
+                    abort(400, description=f"{genre} is not a valid genre.")
+        
     if selected_genres and selected_publisher:    
         games = browseServices.get_games_by_genre_and_publisher(selected_genres, selected_publisher, repo.repo_instance)[offset: offset + per_page]
         total_games = len(browseServices.get_games_by_genre_and_publisher(selected_genres, selected_publisher, repo.repo_instance))
