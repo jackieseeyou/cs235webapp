@@ -27,7 +27,7 @@
                 <td>{{ game.game_id }}</td>
                 <td><a href="{{url_for('game_description', game_id=game.game_id)}}"><img src={{game.image_url}} alt="{{game.title}}"></img></a></td>
                 <td>{{game.release_date}}</td>
-                <td>${{game.price}}</td>
+                <td>{{game.price}}</td>
                 <td>{{game.publisher.publisher_name}}</td>
                 <td>
                     {% for genre in game.genres %}
