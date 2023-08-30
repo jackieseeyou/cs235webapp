@@ -12,7 +12,7 @@
   grid-template-areas:
     "left-sidebar header right-sidebar"
     "left-sidebar content right-sidebar"
-    "footer footer footer ";
+    "footer footer right-sidebar ";
   height: 100vh;
   width: 80vw;
   margin-left: auto;
@@ -21,7 +21,6 @@
 
 
 .body{
-  background-color: #151515;
   color: #d5d5d5;
   display: flex;
   flex-grow: 1;
@@ -42,9 +41,9 @@ header{
   display:flex;
   justify-content:space-between;
   align-items: left;
-  padding: 5px 20px;
   background-color: #677bc4;
-  height: 50px;
+  padding: 0px 20px;
+  height: 60px;
 }
 
 footer{
@@ -65,13 +64,13 @@ footer{
   justify-content: space-between;
   align-items: center;
   background-color: #677bc4;  
+  width: 100%;
+  height: 60px;
 }
 
 .navbar li{
   align-self: center;
   margin: 0 25px;
-  padding: 11px 20px;
-  height: 60px;
 }
 
 
@@ -85,22 +84,23 @@ footer{
   text-decoration: none;
 }
 
-.left-sidebar{
-  grid-area: left-sidebar;
+.sidebar{
   width: 240px;
-  background: #677bc4;
-  color: white;
+  height: 100%;
+  background-color: #677bc4;
 }
-.right-sidebar{
+
+#left-sidebar{
+  grid-area: left-sidebar;
+}
+#right-sidebar{
   grid-area: right-sidebar;
-  width: 240px;
-  background: #677bc4;
-  color: white;
 }
 
 
 .content{
   grid-area: content;
+  background-color: #36393f;
   padding: 20px;
   width: 100%;
 }
@@ -118,10 +118,11 @@ footer{
 }
 
 
-.logo{
+.logo img{
   width: 240;
   height: 60;
   cursor:pointer;
+  padding: 5px;
   border-radius: 15px;
 }
 
@@ -257,7 +258,6 @@ footer{
 }
 
 .search__container{
-  position: relative;
   display: flex;
   flex-direction: column;
   width: 240px;
@@ -268,19 +268,16 @@ footer{
 }
 
 .search_bar{
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 80%;
   row-gap: 200px;
   justify-content:space-evenly;
 }
-.search-results{
-  position:absolute;
-}
 
 .search-result-item {
-  position: relative;
-  display: flex;
+  display: inline-block;
   align-items: center;
   background-color:#515151;
 }

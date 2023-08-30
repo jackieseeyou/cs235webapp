@@ -24,11 +24,6 @@ def get_items(repo, offset, per_page):
     games = get_games(repo)
     return games[offset: offset + per_page]
 
-def search_games(query, repo):
-    games = get_games(repo)
-    filtered_games = [game for game in games if query.lower() in game['title'].lower()]
-    return filtered_games
-
 def get_game(game_id, repo):
     game = repo.get_game(game_id)
     if game is None:

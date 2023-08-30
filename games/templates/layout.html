@@ -13,7 +13,7 @@
         <header>
             {% include 'navigation.html' %}
         </header>
-        <div class="left-sidebar">
+        <div class="sidebar" id="left-sidebar">
             <a class="logo" href="/">
                 <img src="..\static\images\logo.png" alt="logo" width="240" height="60"/>
             </a>
@@ -25,7 +25,7 @@
         <div class="content">
             {% block content %}{% endblock %}
         </div>
-        <div class="right-sidebar"></div>
+        <div class="sidebar" id="right-sidebar"></div>
 
         <footer>{% include 'footer.html' %}</footer>
     </div>
