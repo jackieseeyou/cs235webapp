@@ -1,11 +1,8 @@
-
-
 import pytest
-
 from games import create_app
 
 
-pytest.fixture
+@pytest.fixture
 def client():
     my_app = create_app({
         'TESTING': True
@@ -84,18 +81,17 @@ def test_browse_games(client):
         assert response.status_code == 400
 
 
-
-
 def test_home_page(client):
     with client:
         response = client.get('/')
         assert response.status_code == 200
 
+
 def test_description_page(client):
     with client:
 
         # test the route with valid game_id
-        response = client.get('/browse/3010')
+        response = client.get('/browse/7940')
         assert response.status_code == 200
 
         # test the route with invalid game_id
@@ -105,3 +101,4 @@ def test_description_page(client):
         # test the route with invalid integer input
         response = client.get('/browse/123')
         assert response.status_code == 404
+

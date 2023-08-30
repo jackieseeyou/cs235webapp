@@ -13,6 +13,9 @@ class MemoryRepository(AbstractRepository):
     def add_game(self, game: Game):
         if isinstance(game, Game):
             insort_left(self.__games, game)
+            for genre in game.genres:
+                self.add_genre(genre)
+            self.add_publisher(game.publisher)
 
     def add_genre(self, genre: Genre):
         if isinstance(genre, Genre) and genre not in self.__genres:

@@ -12,14 +12,16 @@ def browse_games():
     all_genre_names = [genre.genre_name for genre in all_genres]
     all_publishers = browseServices.get_publishers(repo.repo_instance)
     all_publisher_names = [publisher.publisher_name for publisher in all_publishers]
-
-    page = (int(request.args.get('page', 1)))   
     per_page = 5
+    page = (request.args.get('page', 1))
+    try:
+        page = int(page)
+    except ValueError:
+        abort(400, description=f"The page number must be an integer.")
     offset = (page - 1) * per_page
     selected_genres = request.args.getlist('genres')
     selected_publisher = request.args.get('publisher')
     total_games = 0
-
 
     if selected_publisher:
         if selected_publisher not in all_publisher_names:
