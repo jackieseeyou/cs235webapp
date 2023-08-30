@@ -1,4 +1,6 @@
-def get_games(repo):
+from games.adapters.repository import AbstractRepository
+
+def get_games(repo:AbstractRepository):
     games = repo.get_games()
     game_dicts = []
     for game in games:
@@ -14,7 +16,7 @@ def get_games(repo):
         game_dicts.append(game_dict)
     return game_dicts
 
-def search_games(query, repo):
+def search_games(query, repo:AbstractRepository):
     games = get_games(repo)
     filtered_games = [game for game in games if query.lower() in game['title'].lower()]
     return filtered_games

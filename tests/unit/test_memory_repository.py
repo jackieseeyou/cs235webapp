@@ -1,4 +1,4 @@
-from games.adapters.memory_repository import MemoryRepository, populate
+from games.adapters.memory_repository import MemoryRepository
 from games.adapters.repository import AbstractRepository
 from games.domainmodel.model import Publisher, Genre, Game
 import pytest
