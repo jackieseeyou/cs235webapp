@@ -21,7 +21,8 @@
 
 
 .body{
-  color: #d5d5d5;
+  color:antiquewhite;
+  background-color: aliceblue;
   display: flex;
   flex-grow: 1;
 }
@@ -38,11 +39,11 @@ li, a, button{
 } 
 
 header{
+  width: 100%;
   display:flex;
   justify-content:space-between;
-  align-items: left;
+  align-items: right;
   background-color: #677bc4;
-  padding: 0px 20px;
   height: 60px;
 }
 
@@ -57,6 +58,7 @@ footer{
 }
 
 .navbar{
+  position: relative;
   grid-area: header;
   list-style-type: none;
   padding: 0;
@@ -69,8 +71,9 @@ footer{
 }
 
 .navbar li{
-  align-self: center;
-  margin: 0 25px;
+
+  align-self: left;
+  margin: 0 30px;
 }
 
 
@@ -259,27 +262,39 @@ footer{
 
 .search__container{
   display: flex;
+  position: relative;
   flex-direction: column;
   width: 240px;
-  height: 100%;
-  row-gap: 200px;
-  align-items: center;
-  justify-content:center;
+  align-items: left;
+  margin-left: auto;
+
 }
 
 .search_bar{
   position: relative;
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-  row-gap: 200px;
-  justify-content:space-evenly;
+  width: 90%;
+  padding: 10px;
+
+}
+
+.search-dropdown {
+  position: absolute;
+  display: none;
+  top: 100%;
+  width: 90%;
+  max-height: 500px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .search-result-item {
-  display: inline-block;
-  align-items: center;
-  background-color:#515151;
+  display: block;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  color: #333;
+  text-decoration: none;
 }
 
 .search-result-item:hover {
@@ -287,37 +302,14 @@ footer{
   color: #515151;
 }
 
-.search-dropdown{
-  display: none;
-  position: absolute;
-  background-color: #f0f0f0;
-  max-width: 200px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 10;
-}
 
-.search_filter_container{
-  width: 240px;
-  height: 100%;
+.filter-container{
+  width: 220px;
+  height: auto;
+  margin-bottom: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.genre_filter_container{
-  height: 200px;
-  width: auto;
-  overflow-y: auto;
-  display: inline-block;
-  justify-content: space-between;
-}
-
-.publisher_filter_container{
-  height: 200px;
-  width: auto;
-  overflow-y: auto;
-  display: inline-block;
-  justify-content: space-between;
 }
 
 
@@ -367,10 +359,9 @@ footer{
   display: none;
   position: absolute;
   top: 100%;
-  left: 0;
   text-align: left;
-  width: 100%;
-  height: 200px;
+  width: 90%;
+  max-height: 200px;
   overflow-y: auto;
   border: 1px solid #ccc;
   background:#36393f;

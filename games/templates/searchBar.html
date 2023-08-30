@@ -5,34 +5,45 @@
 
 
 <script>
-    document.getElementById('search-box').addEventListener('keyup', function() {
-    let query = document.getElementById('search-box').value;
-    let resultsContainer = document.getElementById('search-results');
+    const searchBox = document.getElementById('search-box');
+const resultsContainer = document.getElementById('search-results');
+let timeout = null;
 
-    if (query.length > 2) {
-        fetch(`/search/${query}`)
-            .then(response => response.json())
-            .then(data => {
-                resultsContainer.innerHTML = '';
-                if (data.length > 0) {
-                    data.forEach(game => {
-                        var game_id = game.game_id;
-                        var url = '/browse/' + game_id;
-                        resultsContainer.innerHTML += 
-                        `
-                            <a href=${ url }><div class="search-result-item">
-                                <img src="${game.image}" alt="${game.title}" width="100px">
-                                ${game.title}
-                            </div></a>
-                        `
-                    });
-                    resultsContainer.style.display = 'block';  // Show the results
-                } else {
-                    resultsContainer.style.display = 'none';   // Hide if no results
-                }
-            });
-    } else {
-        resultsContainer.style.display = 'none';   // Hide if input is too short
-    }
+searchBox.addEventListener('keyup', function() {
+    clearTimeout(timeout);
+    timeout = setTimeout(function() {
+        let query = searchBox.value;
+
+        if (query.length > 2) {
+            fetch(`/search/${query}`)
+                .then(response => response.json())
+                .then(data => {
+                    resultsContainer.innerHTML = '';
+                    if (data.length > 0) {
+                        data.forEach(game => {
+                            var game_id = game.game_id;
+                            var url = '/browse/' + game_id;
+                            resultsContainer.innerHTML +=
+                            `
+                                <a href=${ url }><div class="search-result-item">
+                                    <img src="${game.image}" alt="${game.title}" width="100px">
+                                    ${game.title}
+                                </div></a>
+                            `;
+                        });
+                        resultsContainer.style.display = 'block';  // Show the results
+                    } else {
+                        resultsContainer.style.display = 'none';   // Hide if no results
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching search results:', error);
+                    resultsContainer.style.display = 'none';   // Hide if there is an error
+                });
+        } else {
+            resultsContainer.style.display = 'none';   // Hide if input is too short
+        }
+    }, 50);
 });
+
 </script>
