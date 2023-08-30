@@ -1,10 +1,13 @@
-from flask import Blueprint, render_template
-from games.description import services
+from flask import Blueprint, render_template, abort
+from games.description import descriptionServices
 
 description_blueprint = Blueprint('description_bp', __name__)
 
 @description_blueprint.route('/browse/<int:game_id>', methods=['GET'])
 
 def description(game_id):
-    game = services.get_game(game_id)
+    game = descriptionServices.get_game(game_id)
+    if game is None:
+        abort(404, description="No game was found with the given id.")
+        
     return render_template("/description/description.html", game = game)
