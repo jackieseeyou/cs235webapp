@@ -28,10 +28,15 @@
             </ul>
 
         </div>
+
+
     <div id="filter-buttons">
-    <button class="filter-button" id="apply-filters">apply filter(s)</button>
-    <button class="filter-button" id="clear-filters">clear filter(s)</button>
+        <button class="filter-button" id="apply-filters">apply filter(s)</button>
+        <button class="filter-button" id="clear-filters">clear filter(s)</button>
+        <div id="selected-Genres"></div>
+        <div id="selected-Publishers"></div>
     </div>
+
     {% endblock %}
 
     {% block content %}
@@ -78,6 +83,7 @@
 
 <script>
 
+    
     document.getElementById('genre-bar').addEventListener('click', function() {
     document.getElementById('genre-filter-dropdown').style.display = 'block';
 });
@@ -94,12 +100,12 @@ document.addEventListener('click', function(event) {
     
     if (event.target.id !== 'search-box' && event.target.id !== 'search-results' && event.target.id !== 'genre-bar' && !isClickInsideGenreFilterDropdown && event.target.id !== 'publisher-bar' && !isClickInsidePublisherFilterDropdown) {
         document.getElementById('search-results').style.display = 'none';
+
+
         genreFilterDropdown.style.display = 'none';
         publisherFilterDropdown.style.display = 'none';
-        document.getElementById('genre-bar').value = selectedGenres.join(', ');
     }
 });
-
 document.getElementById('apply-filters').addEventListener('click', function() {
     var selectedGenres = [];
     var selectedPublisher = document.querySelector('#publisher-filter-dropdown input[type="radio"]:checked');
@@ -112,25 +118,28 @@ document.getElementById('apply-filters').addEventListener('click', function() {
     });
 
     if (selectedGenres.length > 0 || selectedPublisher) {
-    var url = '/browse?page=1';
-    if (selectedGenres.length > 0){
-        url += '&genres=' + selectedGenres.join(',');
+        var url = '/browse?page=1';
+        if (selectedGenres.length > 0){
+            url += '&genres=' + selectedGenres.join(',');
+        }
+        if (selectedPublisher){
+            url += '&publisher=' + selectedPublisher.id;
+        }
+        window.location.href = url;
     }
-    if (selectedPublisher){
-        url += '&publisher=' + selectedPublisher.id;
-    }
-}
 
-    window.location.href = url;
+    updateSelectedFilters();
 });
+
 
 
 document.getElementById('clear-filters').addEventListener('click', function(){
     selectedGenres = [];
     selectedPublisher = null;
     window.location.href = '/browse';
+    updateSelectedFilters();
+});
 
-})
 
 function search_filter(elementID, dropdownID){
     var input, filter, ul, li, a, i;
@@ -156,6 +165,34 @@ document.getElementById('genre-bar').addEventListener('keyup', function() {
 document.getElementById('publisher-bar').addEventListener('keyup', function() {
     search_filter('publisher-bar', 'publisher-filter-dropdown');
 });
+
+function updateSelectedFilters() {
+    var selectedGenres = [];
+    var selectedPublisher = document.querySelector('#publisher-filter-dropdown input[type="radio"]:checked');
+    var checkboxes = document.querySelectorAll('#genre-filter-dropdown input[type="checkbox"]');
+    var selectedGenresDiv = document.getElementById('selected-Genres');
+    var selectedPublishersDiv = document.getElementById('selected-Publishers');
+    
+    checkboxes.forEach(function(checkbox) {
+        if (checkbox.checked) {
+            selectedGenres.push(checkbox.value);
+        }
+    });
+
+    selectedGenresDiv.innerHTML = 'Selected Genres: ' + (selectedGenres.length > 0 ? selectedGenres.join(', ') : 'None');
+    selectedPublishersDiv.innerHTML = 'Selected Publisher: ' + (selectedPublisher ? selectedPublisher.value : 'None');
+}
+
+document.querySelectorAll('#genre-filter-dropdown input[type="checkbox"]').forEach(function(checkbox) {
+    checkbox.addEventListener('change', updateSelectedFilters);
+});
+
+document.querySelectorAll('#publisher-filter-dropdown input[type="radio"]').forEach(function(radio) {
+    radio.addEventListener('change', updateSelectedFilters);
+});
+
+
+
 
 
     </script>
