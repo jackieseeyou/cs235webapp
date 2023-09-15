@@ -25,6 +25,9 @@ def create_app(test_config=None):
         from .searchBar import searchBar
         app.register_blueprint(searchBar.search_blueprint)
 
+        from .user import user
+        app.register_blueprint(user.user_blueprint)
+
     repo.repo_instance = MemoryRepository()
     populate(repo.repo_instance)
 
