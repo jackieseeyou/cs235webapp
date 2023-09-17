@@ -28,6 +28,10 @@ def create_app(test_config=None):
         from .user import user
         app.register_blueprint(user.user_blueprint)
 
+        from .authentication import authentication
+        app.register_blueprint(authentication.login_blueprint)
+        app.register_blueprint(authentication.signup_blueprint)
+
     repo.repo_instance = MemoryRepository()
     populate(repo.repo_instance)
 
