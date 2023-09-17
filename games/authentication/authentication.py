@@ -9,12 +9,13 @@ signup_blueprint = Blueprint('signup_bp', __name__)
 
 @login_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template("authentication/authentication.html", title="Log In", login=True)
+    form =  LoginForm()
+    return render_template("authentication/authentication.html", title="Log In", form=form)
 
 @signup_blueprint.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegistrationForm()
-    return render_template("authentication/authentication.html", title="Sign Up", signup=True, form=form)
+    return render_template("authentication/authentication.html", title="Sign Up", form=form)
 
 class PasswordValid:
     def __init__(self, message=None):
@@ -42,3 +43,13 @@ class RegistrationForm(FlaskForm):
         DataRequired(message='Your password is required'),
         PasswordValid()])
     submit = SubmitField('Register')
+
+class LoginForm(FlaskForm):
+    user_name = StringField('Username', [
+        DataRequired(message='Your user name is required'),
+    ]
+    )
+    password = PasswordField('Password', [
+        DataRequired(message='Your password is required')
+    ])
+    submit = SubmitField('Log In')
