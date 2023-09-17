@@ -19,7 +19,7 @@ def browse_games():
     except ValueError:
         abort(400, description=f"The page number must be an integer.")
     offset = (page - 1) * per_page
-    selected_genres = request.args.getlist('genres')
+    selected_genres = request.args.get('genres').split(',')
     selected_publisher = request.args.get('publisher')
     total_games = 0
 
