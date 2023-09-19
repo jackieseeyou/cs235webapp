@@ -30,7 +30,6 @@ class MemoryRepository(AbstractRepository):
         if isinstance(user, User) and user not in self.__users:
             self.__users.append(user)
 
-
     def get_games(self) -> List[Game]:
         return self.__games
 
@@ -49,7 +48,7 @@ class MemoryRepository(AbstractRepository):
     def get_number_of_publishers(self) -> int:
         return len(self.__publishers)
     
-    def get_all_users(self) -> List[User]:
+    def get_users(self) -> List[User]:
         return self.__users
     
     def get_number_of_users(self) -> int:

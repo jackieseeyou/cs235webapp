@@ -1,7 +1,7 @@
 import abc
 from typing import List
 
-from games.domainmodel.model import Game
+from games.domainmodel.model import Game, User
 
 repo_instance = None
 
@@ -22,3 +22,10 @@ class AbstractRepository(abc.ABC):
     def get_number_of_games(self):
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def add_user(self, user: User):
+        raise NotImplementedError
+    
+    @abc.abstractmethod
+    def get_users(self) -> List[User]:
+        raise NotImplementedError

@@ -1,9 +1,8 @@
 """Initialize Flask app."""
 
-from flask import Flask, render_template
+from flask import Flask
 import games.adapters.repository as repo
 from games.adapters.memory_repository import MemoryRepository, populate
-from games.adapters.datareader.csvdatareader import GameFileCSVReader
 from dotenv import load_dotenv
 import os
 

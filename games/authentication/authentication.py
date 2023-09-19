@@ -3,6 +3,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 from password_validator import PasswordValidator
+import games.adapters.repository as repo
+from games.authentication import services
 
 login_blueprint = Blueprint('login_bp', __name__)
 signup_blueprint = Blueprint('signup_bp', __name__)
@@ -10,11 +12,23 @@ signup_blueprint = Blueprint('signup_bp', __name__)
 @login_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     form =  LoginForm()
+
+    if form.validate_on_submit():
+        user = services.get_user(repo.repo_instance, form.user_name.data)
+        if user is None:
+            abort(400, description="Incorrect username or password")
+        return redirect(url_for('home_bp.home'))
     return render_template("authentication/authentication.html", title="Log In", form=form)
 
 @signup_blueprint.route('/signup', methods=['GET', 'POST'])
 def signup():
     form = RegistrationForm()
+
+    if form.validate_on_submit():
+        services.add_user(form.user_name.data, form.password.data, repo.repo_instance)
+
+        return redirect(url_for('login_bp.login'))
+    
     return render_template("authentication/authentication.html", title="Sign Up", form=form)
 
 class PasswordValid:
