@@ -30,6 +30,9 @@ class MemoryRepository(AbstractRepository):
         if isinstance(user, User) and user not in self.__users:
             self.__users.append(user)
 
+    def get_user(self, username) -> User:
+        return next((user for user in self.__users if user.username == username), None)
+
     def get_games(self) -> List[Game]:
         return self.__games
 

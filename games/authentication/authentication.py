@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, abort
+from flask import Blueprint, render_template, redirect, url_for, abort, session
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
@@ -12,13 +12,27 @@ signup_blueprint = Blueprint('signup_bp', __name__)
 @login_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
     form =  LoginForm()
+    username_not_recognised = None
+    password_not_recognised = None
 
-    if form.validate_on_submit():
-        user = services.get_user(repo.repo_instance, form.user_name.data)
-        if user is None:
-            abort(400, description="Incorrect username or password")
-        return redirect(url_for('home_bp.home'))
-    return render_template("authentication/authentication.html", title="Log In", form=form)
+    try:
+        if form.validate_on_submit():
+            user = services.get_user(form.user_name.data, repo.repo_instance)
+
+            services.authenticate_user(user['username'], form.password.data, repo.repo_instance)
+
+            session.clear()
+            session['username'] = user['username']
+            return redirect(url_for('home_bp.home'))
+    except services.UnknownUserException:
+        username_not_recognised = "User does not exist!"
+    
+    except services.AuthenticationException:
+        password_not_recognised = "Incorrect username or password!"
+    
+    return render_template("authentication/authentication.html", title="Log In", form=form, 
+                           username_not_recognised =username_not_recognised, 
+                           password_not_recognised = password_not_recognised)
 
 @signup_blueprint.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -26,7 +40,6 @@ def signup():
 
     if form.validate_on_submit():
         services.add_user(form.user_name.data, form.password.data, repo.repo_instance)
-
         return redirect(url_for('login_bp.login'))
     
     return render_template("authentication/authentication.html", title="Sign Up", form=form)
