@@ -8,6 +8,7 @@
             <li>{% include 'searchBar.html'%}</li>
             {% if 'username' in session %}
             <li><a href="{{url_for('user_bp.user')}}">{{ session['username'] }}</a></li>
+            <li><a href="{{url_for('logout_bp.logout')}}">Log Out</a></li>
             {% else %}
             <li><a href="{{url_for('signup_bp.signup')}}">Sign Up</a></li>
             <li><a href="{{url_for('login_bp.login')}}">Log in</a></li>

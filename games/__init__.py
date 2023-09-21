@@ -38,7 +38,7 @@ def create_app(test_config=None):
         from .authentication import authentication
         app.register_blueprint(authentication.login_blueprint)
         app.register_blueprint(authentication.signup_blueprint)
-
+        app.register_blueprint(authentication.logout_blueprint)
     repo.repo_instance = MemoryRepository()
     populate(repo.repo_instance)
 

@@ -8,6 +8,7 @@ from games.authentication import services
 
 login_blueprint = Blueprint('login_bp', __name__)
 signup_blueprint = Blueprint('signup_bp', __name__)
+logout_blueprint = Blueprint('logout_bp', __name__)
 
 @login_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
@@ -43,6 +44,11 @@ def signup():
         return redirect(url_for('login_bp.login'))
     
     return render_template("authentication/authentication.html", title="Sign Up", form=form)
+
+@logout_blueprint.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('home_bp.home'))
 
 class PasswordValid:
     def __init__(self, message=None):
