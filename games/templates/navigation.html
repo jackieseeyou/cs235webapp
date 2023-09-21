@@ -6,9 +6,12 @@
             <li><a href="">Wishlist</a></li>
             <li>kyao733 | mfu466 | jsie347</li>
             <li>{% include 'searchBar.html'%}</li>
+            {% if 'username' in session %}
+            <li><a href="{{url_for('user_bp.user')}}">{{ session['username'] }}</a></li>
+            {% else %}
             <li><a href="{{url_for('signup_bp.signup')}}">Sign Up</a></li>
             <li><a href="{{url_for('login_bp.login')}}">Log in</a></li>
-
+            {% endif %}
         </ul>
 
 
