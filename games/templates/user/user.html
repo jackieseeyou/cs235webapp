@@ -4,5 +4,18 @@
 {% endblock%}
 
 {% block content %}
-Hello {{ session['username'] }}
+<h1>Hello {{ session['username'] }}</h1>
+
+<h2>Wishlist</h2>
+<ul>
+    {% for game in user.favourite_games %}
+    <li>{{ game.name }}</li>
+    {% endfor %}
+</ul>
+
+<h2>Reviews</h2>
+<ul>
+    {% for review in user.reviews %}
+    <li>{{ review.game.name }}</li>
+    {% endfor %}
 {% endblock %}
