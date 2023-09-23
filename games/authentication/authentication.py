@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired, Length, EqualTo, ValidationError
 from password_validator import PasswordValidator
 import games.adapters.repository as repo
 from games.authentication import services
+from functools import wraps
 
 login_blueprint = Blueprint('login_bp', __name__)
 signup_blueprint = Blueprint('signup_bp', __name__)
@@ -86,3 +87,11 @@ class LoginForm(FlaskForm):
         DataRequired(message='Your password is required')
     ])
     submit = SubmitField('Log In')
+
+def login_required(view):
+    @wraps(view)
+    def wrapped_view(**kwargs):
+        if not session['username']:
+            return redirect(url_for('login_bp.login'))
+        return view(**kwargs)
+    return wrapped_view

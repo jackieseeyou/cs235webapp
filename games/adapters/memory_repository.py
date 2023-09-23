@@ -30,12 +30,14 @@ class MemoryRepository(AbstractRepository):
         if isinstance(user, User) and user not in self.__users:
             self.__users.append(user)
 
-    def get_user(self, username) -> User:
-        return next((user for user in self.__users if user.username == username), None)
-
     def get_games(self) -> List[Game]:
         return self.__games
-
+    
+    def get_game(self, game_id: int) -> Game:
+        for game in self.__games:
+            if game.game_id == game_id:
+                return game
+        
     def get_number_of_games(self) -> int:
         return len(self.__games)
     
@@ -56,7 +58,12 @@ class MemoryRepository(AbstractRepository):
     
     def get_number_of_users(self) -> int:
         return len(self.__users)
-
+    
+    def get_user(self, username):
+        for user in self.__users:
+            print(user)
+            if user.username == username:
+                return user
 
 def populate(repo: AbstractRepository):
     dir_name = os.path.dirname(os.path.abspath(__file__))
