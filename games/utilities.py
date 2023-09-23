@@ -17,10 +17,12 @@ def get_user(username:str, repo: AbstractRepository) -> User:
         raise UnknownUserException
     return user
    
+
 def add_to_wishlist(username, game_id, repo: AbstractRepository):
     user = get_user(username, repo)
     game = get_game(game_id, repo)
     user.add_favourite_game(game)
+
 
 def remove_from_wishlist(username, game_id, repo: AbstractRepository):
     user = get_user(username, repo)

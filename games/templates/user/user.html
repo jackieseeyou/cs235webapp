@@ -7,11 +7,43 @@
 <h1>Hello {{ session['username'] }}</h1>
 
 <h2>Wishlist</h2>
-<ul>
-    {% for game in user.favourite_games %}
-    <li>{{ game.title }}</li>
-    {% endfor %}
-</ul>
+<table class="games__table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Release Date</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for game in user.favourite_games %}
+        <tr>
+            <td>
+                {{ game.game_id }}
+            </td>
+            <td>
+                <div id="game-link-container">
+                <a href="{{ url_for('description_bp.description', game_id = game.game_id) }}"id="game-image"><img src="{{ game.image }}">    {{ game.title }}</a>
+                </div>
+            </td>
+            <td>
+                {{ game.release_date }}
+            </td>
+            <td>
+                ${{ game.price }}
+            </td>
+            <td>
+                <form action="{{ url_for('user_bp.remove_from_wishlist_endpoint') }}" method="POST">
+                    <input type="hidden" name="game_id" value="{{ game.game_id }}">
+                    <input type="submit" value="Remove from wishlist">
+                </form>
+            </td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 <h2>Reviews</h2>
 <ul>

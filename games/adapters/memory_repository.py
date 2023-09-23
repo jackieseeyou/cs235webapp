@@ -78,3 +78,4 @@ def populate(repo: AbstractRepository):
         for genre in game.genres:
             repo.add_genre(genre)
         repo.add_publisher(game.publisher)
+
