@@ -29,6 +29,15 @@
         <div class="game__about">
             <p><strong>About:</strong> {{game.description}}</p>
         </div>
+
+        {% if 'username' in session %}
+        <div id="add_to_wishlist">
+            <form action="{{url_for('description_bp.add_to_wishlist_endpoint', game_id=game.game_id)}}" method="POST">
+                <input type="submit" value="Add to Wishlist">
+            </form>
+        </div>
+        {% endif %}
+
     </main>
 {% endblock %}
 

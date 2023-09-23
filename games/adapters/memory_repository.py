@@ -2,13 +2,14 @@ from bisect import insort_left
 from typing import List
 import os
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game, Genre, Publisher
+from games.domainmodel.model import Game, Genre, Publisher, User
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
 class MemoryRepository(AbstractRepository):
     def __init__(self):
         self.__games = list()
         self.__genres = list()
         self.__publishers = list()
+        self.__users = list()
 
     def add_game(self, game: Game):
         if isinstance(game, Game):
@@ -25,23 +26,44 @@ class MemoryRepository(AbstractRepository):
         if isinstance(publisher, Publisher) and publisher not in self.__publishers:
             self.__publishers.append(publisher)
 
+    def add_user(self, user):
+        if isinstance(user, User) and user not in self.__users:
+            self.__users.append(user)
+
     def get_games(self) -> List[Game]:
         return self.__games
-
-    def get_number_of_games(self):
+    
+    def get_game(self, game_id: int) -> Game:
+        for game in self.__games:
+            if game.game_id == game_id:
+                return game
+        
+    def get_number_of_games(self) -> int:
         return len(self.__games)
     
-    def get_all_genres(self):
+    def get_all_genres(self) -> List[Genre]:
         return self.__genres
     
-    def get_number_of_genres(self):
+    def get_number_of_genres(self) -> int:
         return len(self.__genres)
     
-    def get_publishers(self):
+    def get_publishers(self) -> List[Publisher]:
         return self.__publishers
     
-    def get_number_of_publishers(self):
+    def get_number_of_publishers(self) -> int:
         return len(self.__publishers)
+    
+    def get_users(self) -> List[User]:
+        return self.__users
+    
+    def get_number_of_users(self) -> int:
+        return len(self.__users)
+    
+    def get_user(self, username):
+        for user in self.__users:
+            print(user)
+            if user.username == username:
+                return user
 
 def populate(repo: AbstractRepository):
     dir_name = os.path.dirname(os.path.abspath(__file__))
