@@ -18,25 +18,19 @@ def description(game_id):
 @login_required
 def add_to_wishlist_endpoint(game_id):
     username = session['username']
-    add_to_wishlist(game_id, username, repo.repo_instance)
+    utilities.add_to_wishlist(username, game_id, repo.repo_instance)
     return render_template("/description/description.html", 
                            game = descriptionServices.get_game(repo.repo_instance, game_id),
                            user = utilities.get_user(username, repo.repo_instance) 
                            )
 
+
 @description_blueprint.route('/browse/<int:game_id>', methods=['POST'])
 @login_required
 def remove_from_wishlist_endpoint(game_id):
     username = session['username']
-    remove_from_wishlist(game_id, username, repo.repo_instance)
+    utilities.remove_from_wishlist(username, game_id, repo.repo_instance)
     return render_template("/description/description.html", 
                            game = descriptionServices.get_game(repo.repo_instance, game_id),
                            user = utilities.get_user(username, repo.repo_instance) 
                            )
-def add_to_wishlist(game_id, username, repo):
-    """Adds a game to a user's wishlist."""
-    utilities.add_to_wishlist(username, game_id, repo)
-    
-def remove_from_wishlist(game_id, username, repo):
-    """Removes a game from a user's wishlist."""
-    utilities.remove_from_wishlist(username, game_id, repo)
