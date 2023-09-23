@@ -12,7 +12,9 @@ def description(game_id):
     if game is None:
         abort(404, description="No game was found with the given id.")
         
-    return render_template("/description/description.html", game = game)
+    return render_template("/description/description.html", game = game,
+                           favourite_games = descriptionServices.get_favourite_games(repo.repo_instance, session['username'])
+    )  
 
 @description_blueprint.route('/browse/<int:game_id>', methods=['POST'])
 @login_required
@@ -34,3 +36,4 @@ def remove_from_wishlist_endpoint(game_id):
                            game = descriptionServices.get_game(repo.repo_instance, game_id),
                            user = utilities.get_user(username, repo.repo_instance) 
                            )
+
