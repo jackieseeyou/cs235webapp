@@ -12,6 +12,7 @@ class MemoryRepository(AbstractRepository):
         self.__genres = list()
         self.__publishers = list()
         self.__users = list()
+        self.__reviews = list()
 
     def add_game(self, game: Game):
         if isinstance(game, Game):
@@ -87,3 +88,4 @@ def populate(repo: AbstractRepository):
         for genre in game.genres:
             repo.add_genre(genre)
         repo.add_publisher(game.publisher)
+

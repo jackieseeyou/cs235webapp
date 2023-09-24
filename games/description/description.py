@@ -16,7 +16,7 @@ def description(game_id):
     if game is None:
         abort(404, description="No game was found with the given id.")
         
-    return render_template("/description/description.html", game = game, add_review_url = url_for('description_bp.comment_on_game', game_id=game.game_id))
+    return render_template("/description/description.html", game = game, add_review_url = url_for('description_bp.comment_on_game', game_id=game.game_id, game=game))
 
 @description_blueprint.route('/browse/<int:game_id>', methods=['POST'])
 @login_required
@@ -44,10 +44,10 @@ def comment_on_game(game_id):
     if form.validate_on_submit():
         # Successful POST, i.e. the comment text has passed data validation.
         # Extract the article id, representing the commented article, from the form.
-        game_id = int(form.game_id.data)
 
         # Use the service layer to store the new comment.
         descriptionServices.add_review(game_id, form.review.data, form.rating.data, username, repo.repo_instance)
+        print("added review")
 
         # Retrieve the article in dict form.
         #game = descriptionServices.get_game(repo.repo_instance, game_id)
@@ -65,7 +65,7 @@ def comment_on_game(game_id):
         'description/comment_on_game.html',
         game=game,
         form=form,
-        handler_url=url_for('description_bp.comment_on_game', game_id=game.game_id)
+        handler_url=url_for('description_bp.comment_on_game', game_id=game.game_id, game=game)
     )
 
 class ProfanityFree:
