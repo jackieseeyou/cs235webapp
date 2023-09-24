@@ -5,6 +5,57 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+.remove-from-wishlist-button{
+  font: optional;
+}
+.wishlist__table__container{
+  flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  min-height: 200px; 
+  overflow-y: auto;
+}
+
+.wishlist__table__container tr{
+  justify-content:space-between;
+  align-items: center;
+}
+
+.wishlist__table__container tr:hover{
+  background-color: #515151;
+}
+
+.wishlist__table{
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+
+.wishlist__table th, td{
+  border-bottom: 1px solid #d5d5d5;
+}
+
+
+.reviews{
+  min-height: 200px;
+  border:solid 1px;
+}
+
+h1{
+  font-size: 25px;
+  font-weight: 600;
+  padding-bottom: 20x;
+}
+
+h2{
+  padding-top: 10px;
+  font-size: 17px;
+  font-weight: 600;    
+}
+
 .body-wrapper{
   display: grid;
   grid-template-columns: 240px 1fr;
@@ -182,7 +233,7 @@ footer{
 }
 
 .games__table th, td{
-  border: 1px solid #d5d5d5;
+  border-bottom: 1px solid #d5d5d5;
 }
 
 #game-link-container{
@@ -190,12 +241,13 @@ footer{
   align-items: center;
   text-decoration: none;
   width: 100%;
-  height: 200px;
+  height: 100px;
 }
 
 #game-link-container img{
-  width:360px;
-  height: auto;
+  height: 90px;
+  margin: auto;
+  margin-right: 10px;
 }
 
 #game-link-container a{
@@ -320,9 +372,9 @@ footer{
   align-items: center;
   text-align: center;
   padding: 5px 20px;
-  height: 40px;
+  height: 10px;
+  margin-top: -70px;
   font-size: 10px;
-  margin-top: auto;
 }
 
 .pagination .page-link{
@@ -332,7 +384,7 @@ footer{
   border-radius: 0;
   margin: 0 5px;
   padding: 5px 10px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   height: 30px;
 }
@@ -402,8 +454,4 @@ footer{
   justify-content: center;
   margin-top: 10vh;
   margin-bottom: 10vh;
-}
-
-.black-text {
-    color: black;
 }
