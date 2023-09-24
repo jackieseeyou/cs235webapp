@@ -80,7 +80,7 @@ def populate(repo: AbstractRepository):
     games_file_name = os.path.join(dir_name, "data/games.csv")
     reader = GameFileCSVReader(games_file_name)
 
-    reader.read_csv_file()
+    reader.read_csv_file() 
     games = reader.dataset_of_games
 
     for game in games:

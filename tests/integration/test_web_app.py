@@ -101,4 +101,3 @@ def test_description_page(client):
         # test the route with invalid integer input
         response = client.get('/browse/123')
         assert response.status_code == 404
-

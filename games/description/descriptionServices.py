@@ -37,7 +37,7 @@ def add_review(game_id: int, review_text: str, rating: int, username: str, repo:
         raise UnknownUserException
 
     # Create comment.
-    review = make_review(review_text, user, game, rating, )
+    review = make_review(review_text, user, game, rating)
 
     # Update the repository.
     repo.add_review(review)
