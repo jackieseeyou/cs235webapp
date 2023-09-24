@@ -1,5 +1,4 @@
 from datetime import datetime
-import DateTime
 import pytest
 import os
 from games.domainmodel.model import Publisher, Genre, Game, Review, User, Wishlist
