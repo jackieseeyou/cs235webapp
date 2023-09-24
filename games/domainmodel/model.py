@@ -217,6 +217,16 @@ class Game:
             print(f"Could not find {genre} in list of genres.")
             pass
 
+    def add_review(self, review):
+        if not isinstance(review, Review) or review in self.__reviews:
+            return
+        self.__reviews.append(review)
+
+    def remove_review(self, review):
+        if not isinstance(review, Review) or review not in self.__reviews:
+            return
+        self.__reviews.remove(review)
+
     def __repr__(self):
         return f"<Game {self.__game_id}, {self.__game_title}>"
 
@@ -413,11 +423,3 @@ class Wishlist:
         else:
             self.__current += 1
             return self.__list_of_games[self.__current - 1]
-
-def make_review(review_text: str, user: User, game: Game, rating: int):
-    timestamp = datetime.today()
-    review = Review(user, game, rating, review_text, timestamp)
-    user.add_review(review)
-    game.add_review(review)
-
-    return review
