@@ -32,7 +32,9 @@ def description(game_id):
         game=game,
         form=form,
         favourite_games=favourite_games,
-        average_rating=average_rating
+        average_rating=average_rating,
+        handler_url=url_for('description_bp.add_review_endpoint', game_id=game_id)
+
     )
 
 @description_blueprint.route('/browse/<int:game_id>/add_review', methods=['POST'])
