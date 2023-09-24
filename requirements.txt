@@ -5,3 +5,5 @@ flask-paginate
 flask-wtf
 password-validator
 python-dotenv
+better-profanity
+wtforms
