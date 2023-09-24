@@ -46,3 +46,7 @@ class AbstractRepository(abc.ABC):
     def get_reviews(self):
         """ Returns the Comments stored in the repository. """
         raise NotImplementedError
+    
+    @abc.abstractmethod
+    def update_review(self, review: Review):
+        raise NotImplementedError

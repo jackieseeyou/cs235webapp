@@ -67,13 +67,17 @@ class MemoryRepository(AbstractRepository):
             print(user)
             if user.username == username:
                 return user
+
     def add_review(self, review: Review):
-        # call parent class first, add_comment relies on implementation of code common to all derived classes
-        super().add_review(review)
         self.__reviews.append(review)
 
     def get_reviews(self):
         return self.__reviews
+    
+    def update_review(self, updated_review: Review):
+        for index, review in enumerate(self.__reviews):
+            if review.user.username == updated_review.user.username and review.game.game_id == updated_review.game.game_id:
+                self.__reviews[index] = updated_review
 
 def populate(repo: AbstractRepository):
     dir_name = os.path.dirname(os.path.abspath(__file__))

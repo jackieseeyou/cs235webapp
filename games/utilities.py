@@ -33,7 +33,5 @@ def remove_from_wishlist(username, game_id, repo: AbstractRepository):
 def make_review(review_text: str, user: User, game: Game, rating: int):
     timestamp = datetime.today()
     review = Review(user, game, rating, review_text, timestamp)
-    user.add_review(review)
-    game.add_review(review)
 
     return review

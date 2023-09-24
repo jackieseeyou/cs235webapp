@@ -47,8 +47,6 @@
         {% endif %}
 
 
-
-
         <div>
             {% if game.reviews|length > 0 and game.game_id != show_comments_for_game %}
                 <button class="btn-general" style="color: black;" onclick="location.href='{{ game.view_review_url }}'">
@@ -56,9 +54,7 @@
             {% endif %}
         </div>
 
-
     <div style="clear:both">
-
         <div class="form-wrapper">
             <form action="{{handler_url}}" method="post">
                 {{form.game_id}} <!-- Need to include this hidden field as it tracks the article being commented. -->
