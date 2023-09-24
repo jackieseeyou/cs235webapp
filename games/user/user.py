@@ -24,3 +24,4 @@ def remove_from_wishlist_endpoint():
     remove_from_wishlist(username,game_id, repo.repo_instance)
     return redirect(url_for('user_bp.user'))
 
+
