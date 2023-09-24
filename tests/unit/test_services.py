@@ -1,10 +1,12 @@
 import pytest
-from games.domainmodel.model import Game, Genre, Publisher
+from games import utilities
+from games.domainmodel.model import Game, Genre, Publisher, User
 from games.adapters.memory_repository import MemoryRepository
 from games.adapters.repository import AbstractRepository
 from games.browse import browseServices as browseServices
 from games.description import descriptionServices
 from games.searchBar import searchBarServices as searchBarServices
+from games.authentication import services as auth_services
 
 @pytest.fixture
 def test_game():
@@ -16,10 +18,16 @@ def test_game():
 
 
 @pytest.fixture
-def test_repo(test_game):
+def test_repo(test_game, test_user):
     repo = MemoryRepository()
     repo.add_game(test_game)
+    repo.add_user(test_user)
     return repo
+
+@pytest.fixture
+def test_user():
+    user = User("tester", "Password123")
+    return user
 
 # tests for getting games
 def test_get_games(test_repo):
@@ -132,3 +140,98 @@ def test_search_games_empty_query(test_repo):
 # tests for searching games with whitespace query
 def test_search_games_whitespace_query(test_repo):
     assert len(searchBarServices.search_games(" ", test_repo)) == len(test_repo.get_games())
+
+# tests for searching games with invalid repo
+def test_search_games_invalid_repo():
+    assert len(searchBarServices.search_games("test", None)) == 0
+
+
+''' testing for authenticationservices.py'''
+
+# tests for registering user
+
+def test_get_user(test_repo):
+    user = auth_services.get_user("tester", test_repo)
+    assert user["username"] == "tester"
+
+def test_get_user_invalid_username(test_repo):
+    with pytest.raises(auth_services.UnknownUserException):
+        auth_services.get_user("invalid", test_repo)
+
+def test_add_user(test_repo):
+    auth_services.add_user("test", "test", test_repo)
+    assert auth_services.get_user("test", test_repo)["username"] == "test"
+
+def test_add_user_existing_user(test_repo):
+    with pytest.raises(ValueError):
+        auth_services.add_user("tester", "test", test_repo)
+
+
+def test_authenticate_user_invalid_username(test_repo):
+    with pytest.raises(auth_services.AuthenticationException):
+        auth_services.authenticate_user("invalid", "invalid", test_repo)
+
+def test_authenticate_user_invalid_password(test_repo, test_user):
+    user_dict = auth_services.user_to_dict(test_user)
+    with pytest.raises(auth_services.AuthenticationException):
+        auth_services.authenticate_user(user_dict["username"], "invalid", test_repo)
+
+
+'''
+Testing utlities.py
+'''
+
+def test_get_game(test_game, test_repo):
+    game_id = test_game.game_id
+    game = utilities.get_game(game_id, test_repo)
+    assert game == test_game
+
+def test_get_game_invalid_id(test_repo):
+    assert utilities.get_game(1000, test_repo) is None
+
+def test_get_users(test_repo, test_user):
+    assert utilities.get_users(test_repo)[0] == test_user
+
+def test_get_user(test_repo, test_user):
+    assert utilities.get_user("tester", test_repo) == test_user
+
+
+def test_get_user_invalid_username(test_repo):
+    with pytest.raises(auth_services.UnknownUserException):
+        utilities.get_user("invalid", test_repo)
+
+
+def test_add_to_wishlist(test_repo, test_user, test_game):
+    utilities.add_to_wishlist("tester", test_game.game_id, test_repo)
+    assert test_game in test_user.favourite_games
+
+
+def test_remove_from_wishlist(test_repo, test_user, test_game):
+    utilities.remove_from_wishlist("tester", test_game.game_id, test_repo)
+    assert test_game not in test_user.favourite_games
+
+
+def test_make_review(test_repo, test_user, test_game):
+    review = utilities.make_review("test", test_user, test_game, 5)
+    assert review.comment == "test"
+    assert review.user == test_user
+    assert review.game == test_game
+    assert review.rating == 5
+
+def test_make_review_invalid_rating(test_repo, test_user, test_game):
+    with pytest.raises(ValueError):
+        utilities.make_review("test", test_user, test_game, 6)
+
+def test_make_review_negative_rating(test_repo, test_user, test_game):
+    with pytest.raises(ValueError):
+        utilities.make_review("test", test_user, test_game, -1)
+
+def test_make_review_invalid_user(test_repo, test_user, test_game):
+    with pytest.raises(ValueError):
+        utilities.make_review("test", None, test_game, 5)
+    
+def test_make_review_invalid_game(test_repo, test_user, test_game):
+    with pytest.raises(ValueError):
+        utilities.make_review("test", test_user, None, 5)
+    
+    

@@ -23,6 +23,7 @@ def login():
 
             services.authenticate_user(user['username'], form.password.data, repo.repo_instance)
 
+
             session.clear()
             session['username'] = user['username']
             return redirect(url_for('home_bp.home'))

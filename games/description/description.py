@@ -15,6 +15,8 @@ def description(game_id):
     game = descriptionServices.get_game(repo.repo_instance, game_id)
     if game is None:
         abort(404, description="No game was found with the given id.")
+
+    average_rating = descriptionServices.calculate_average_rating(repo.repo_instance, game_id)
     
     # Initialize the form only if the user is logged in
     if 'username' in session:
@@ -29,7 +31,8 @@ def description(game_id):
         "/description/description.html",
         game=game,
         form=form,
-        favourite_games=favourite_games
+        favourite_games=favourite_games,
+        average_rating=average_rating
     )
 
 @description_blueprint.route('/browse/<int:game_id>/add_review', methods=['POST'])

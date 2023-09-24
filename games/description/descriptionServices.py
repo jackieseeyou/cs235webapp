@@ -9,7 +9,7 @@ def get_game(repo: AbstractRepository, game_id):
 def add_review(game_id: int, review_text: str, rating: int, username: str, repo: AbstractRepository):
     game = repo.get_game(game_id)
     if not game:
-        raise ("Game not found!")
+        raise ValueError("Game not found!")
 
     user = repo.get_user(username)
     if user is None:
@@ -46,3 +46,11 @@ def check_existing_review(review_list: [Review], username: str):
     print("No match found!")
     return None
 
+
+def calculate_average_rating(repo, game_id):
+    game = repo.get_game(game_id)
+    if not game:
+        raise ValueError("Game not found!")
+    if not game.reviews:
+        return 0
+    return sum([int(review.rating) for review in game.reviews]) / len(game.reviews)

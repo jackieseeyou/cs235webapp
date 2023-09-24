@@ -27,17 +27,13 @@ def authenticate_user(username, password, repo: AbstractRepository):
     user = repo.get_user(username)
     if user is not None:
         authenticated = check_password_hash(user.password, password)
+
     if not authenticated:
         raise AuthenticationException
 
 
-class NameNotUniqueException(Exception):
-    pass
-
-
 class UnknownUserException(Exception):
     pass
-
 
 class AuthenticationException(Exception):
     pass
@@ -48,3 +44,5 @@ def user_to_dict(user: User):
         'password': user.password
     }
     return user_dict
+
+

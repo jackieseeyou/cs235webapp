@@ -1,7 +1,10 @@
 from games.adapters.repository import AbstractRepository
 
 def get_games(repo:AbstractRepository):
-    games = repo.get_games()
+    try:
+        games = repo.get_games()
+    except Exception:
+        return {}
     game_dicts = []
     for game in games:
         game_dict = {

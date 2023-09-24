@@ -2,6 +2,7 @@ import pytest
 from games import create_app
 
 
+
 @pytest.fixture
 def client():
     my_app = create_app({
@@ -101,4 +102,11 @@ def test_description_page(client):
         # test the route with invalid integer input
         response = client.get('/browse/123')
         assert response.status_code == 404
+
+def test_user_page(client):
+    with client:
+        
+        # test the route with valid username
+        response = client.get('/profile')
+        assert response.status_code == 200
 
