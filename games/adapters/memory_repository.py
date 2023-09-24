@@ -2,8 +2,10 @@ from bisect import insort_left
 from typing import List
 import os
 from games.adapters.repository import AbstractRepository
-from games.domainmodel.model import Game, Genre, Publisher, User
+from games.domainmodel.model import Game, Genre, Publisher, User, Review
 from games.adapters.datareader.csvdatareader import GameFileCSVReader
+from pathlib import Path
+from datetime import date, datetime
 class MemoryRepository(AbstractRepository):
     def __init__(self):
         self.__games = list()
@@ -64,6 +66,13 @@ class MemoryRepository(AbstractRepository):
             print(user)
             if user.username == username:
                 return user
+    def add_review(self, review: Review):
+        # call parent class first, add_comment relies on implementation of code common to all derived classes
+        super().add_review(review)
+        self.__reviews.append(review)
+
+    def get_reviews(self):
+        return self.__reviews
 
 def populate(repo: AbstractRepository):
     dir_name = os.path.dirname(os.path.abspath(__file__))
