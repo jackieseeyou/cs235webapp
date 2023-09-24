@@ -37,7 +37,7 @@
         </div>
         <div style="clear:both">
             {% for review in game.reviews %}
-                <p>{{review.review_text}}, by {{review.user_name}}, Rating: {{review.rating}}, {{review.timestamp}}</p>
+                <p>{{review.comment}}, by {{review.user.username}}, Rating: {{review.rating}}, {{review.timestamp}}</p>
             {% endfor %}
         </div>
     </article>
