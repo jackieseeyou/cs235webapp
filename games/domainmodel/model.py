@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import List, Iterable
 
 
 class Publisher:
@@ -302,7 +303,7 @@ class User:
 
 
 class Review:
-    def __init__(self, user: User, game: Game, rating: int, comment: str):
+    def __init__(self, user: User, game: Game, rating: int, comment: str, timestamp: datetime):
 
         if not isinstance(user, User):
             raise ValueError("User must be an instance of User class")
@@ -319,6 +320,12 @@ class Review:
         if not isinstance(comment, str):
             raise ValueError("Comment must be a string")
         self.__comment = comment.strip()
+
+        self.__timestamp: datetime = timestamp
+
+    @property
+    def timestamp(self) -> datetime:
+        return self.__timestamp
 
     @property
     def game(self) -> Game:
@@ -406,3 +413,11 @@ class Wishlist:
         else:
             self.__current += 1
             return self.__list_of_games[self.__current - 1]
+
+def make_review(review_text: str, user: User, game: Game, rating: int):
+    timestamp = datetime.today()
+    review = Review(user, game, rating, review_text, timestamp)
+    user.add_review(review)
+    game.add_review(review)
+
+    return review

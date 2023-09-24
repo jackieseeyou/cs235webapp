@@ -59,3 +59,4 @@ def get_games_by_genre_and_publisher(selected_genres, selected_publisher, repo):
     filtered_games = [game for game in genre_games if game['publisher'] == selected_publisher]
 
     return filtered_games
+

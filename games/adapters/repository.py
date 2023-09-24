@@ -1,7 +1,7 @@
 import abc
 from typing import List
 
-from games.domainmodel.model import Game, User
+from games.domainmodel.model import Game, User, Review
 
 repo_instance = None
 
@@ -32,4 +32,17 @@ class AbstractRepository(abc.ABC):
     
     @abc.abstractmethod
     def get_users(self) -> List[User]:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def add_review(self, review: Review):
+
+        if review.user is None or review not in review.user.reviews:
+            raise RepositoryException('Review not correctly attached to a User')
+        if review.game is None or review not in review.game.reviews:
+            raise RepositoryException('Review not correctly attached to an Game')
+
+    @abc.abstractmethod
+    def get_reviews(self):
+        """ Returns the Comments stored in the repository. """
         raise NotImplementedError

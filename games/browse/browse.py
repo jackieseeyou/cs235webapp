@@ -1,4 +1,4 @@
-from flask import abort, render_template, Blueprint, request
+from flask import abort, render_template, Blueprint, request, redirect, session
 from flask_paginate import Pagination
 import games.adapters.repository as repo
 from games.browse import browseServices
