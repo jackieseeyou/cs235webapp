@@ -1,6 +1,6 @@
 import pytest
 from games import utilities
-from games.domainmodel.model import Game, Genre, Publisher, User
+from games.domainmodel.model import Game, Genre, Publisher, User, Review
 from games.adapters.memory_repository import MemoryRepository
 from games.adapters.repository import AbstractRepository
 from games.browse import browseServices as browseServices
@@ -115,6 +115,40 @@ def test_get_game(test_repo, test_game):
 # tests for getting game with invalid id
 def test_get_game_invalid_id(test_repo):
     assert descriptionServices.get_game(test_repo, 1000) is None
+
+def test_add_review(test_repo, test_game, test_user):
+    descriptionServices.add_review(test_game.game_id, "test", 5, test_user.username, test_repo)
+    assert test_game.reviews[0].comment == "test"
+
+def test_add_review_invalid_game(test_repo, test_user):
+    with pytest.raises(ValueError):
+        descriptionServices.add_review(None, "test", 5, test_user.username, test_repo)
+
+def test_get_favourite_games(test_repo, test_user):
+    username = test_user.username
+    assert len(descriptionServices.get_favourite_games(test_repo, username)) == len(test_user.favourite_games)
+
+def test_get_favourite_games_invalid_user(test_repo):
+    assert len(descriptionServices.get_favourite_games(test_repo, None)) == 0
+
+def test_calculate_average_rating(test_repo, test_game):
+    assert descriptionServices.calculate_average_rating(test_repo, test_game.game_id) == 0
+
+def test_calculate_average_rating_invalid_game(test_repo):
+    with pytest.raises(ValueError):
+        descriptionServices.calculate_average_rating(test_repo, None)
+
+def test_check_existing_review(test_game, test_user):
+    review = Review(test_user, test_game, 5, "test", None)
+    test_game.add_review(review)
+    assert descriptionServices.check_existing_review(test_game.reviews, test_user.username) == review
+
+def test_check_existing_review_invalid_review(test_game, test_user):
+    assert descriptionServices.check_existing_review(test_game.reviews, test_user.username) is None
+
+def test_check_existing_review_invalid_user(test_game):
+    assert descriptionServices.check_existing_review(test_game.reviews, None) is None
+
 
 '''
 Testing for searchServices.py

@@ -54,3 +54,4 @@ def calculate_average_rating(repo, game_id):
     if not game.reviews:
         return 0
     return sum([int(review.rating) for review in game.reviews]) / len(game.reviews)
+

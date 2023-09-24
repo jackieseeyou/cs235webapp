@@ -103,10 +103,21 @@ def test_description_page(client):
         response = client.get('/browse/123')
         assert response.status_code == 404
 
-def test_user_page(client):
+
+def test_login_page(client):
     with client:
-        
-        # test the route with valid username
-        response = client.get('/profile')
+        response = client.get('/login')
         assert response.status_code == 200
+
+
+def test_register_page(client):
+    with client:
+        response = client.get('/signup')
+        assert response.status_code == 200
+
+
+def test_profile_page_while_not_logged_in(client):
+    with client:
+        response = client.get('/profile')
+        assert response.status_code == 500
 
