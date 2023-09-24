@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, render_template, abort, request, session, 
 from games.authentication.authentication import login_required
 from games.description import descriptionServices
 import games.adapters.repository as repo
-import games.utilities as utilities
+import games.utilities.services as services
 from better_profanity import profanity
 from flask_wtf import FlaskForm
 from wtforms import TextAreaField, HiddenField, SubmitField, IntegerField
@@ -28,11 +28,11 @@ def add_to_wishlist_endpoint(game_id):
 
 def add_to_wishlist(game_id, username, repo):
     """Adds a game to a user's wishlist."""
-    utilities.add_to_wishlist(username, game_id, repo)
+    services.add_to_wishlist(username, game_id, repo)
     
 def remove_from_wishlist(game_id, username, repo):
     """Removes a game from a user's wishlist."""
-    utilities.remove_from_wishlist(username, game_id, repo)
+    services.remove_from_wishlist(username, game_id, repo)
 
 
 @description_blueprint.route('/browse/<int:game_id>/add_review', methods=['GET', 'POST'])

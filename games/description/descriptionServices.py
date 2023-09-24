@@ -1,6 +1,6 @@
 from games.adapters.repository import AbstractRepository
 from games.authentication.services import UnknownUserException
-from games.utilities import make_review
+from games.utilities.services import make_review
 
 def get_game(repo: AbstractRepository, game_id):
     games_list = repo.get_games()
