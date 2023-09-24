@@ -1,5 +1,5 @@
 import pytest
-from games import utilities
+from games.utilities import services
 from games.domainmodel.model import Game, Genre, Publisher, User, Review
 from games.adapters.memory_repository import MemoryRepository
 from games.adapters.repository import AbstractRepository
@@ -217,36 +217,36 @@ Testing utlities.py
 
 def test_get_game(test_game, test_repo):
     game_id = test_game.game_id
-    game = utilities.get_game(game_id, test_repo)
+    game = services.get_game(game_id, test_repo)
     assert game == test_game
 
 def test_get_game_invalid_id(test_repo):
-    assert utilities.get_game(1000, test_repo) is None
+    assert services.get_game(1000, test_repo) is None
 
 def test_get_users(test_repo, test_user):
-    assert utilities.get_users(test_repo)[0] == test_user
+    assert services.get_users(test_repo)[0] == test_user
 
 def test_get_user(test_repo, test_user):
-    assert utilities.get_user("tester", test_repo) == test_user
+    assert services.get_user("tester", test_repo) == test_user
 
 
 def test_get_user_invalid_username(test_repo):
     with pytest.raises(auth_services.UnknownUserException):
-        utilities.get_user("invalid", test_repo)
+        services.get_user("invalid", test_repo)
 
 
 def test_add_to_wishlist(test_repo, test_user, test_game):
-    utilities.add_to_wishlist("tester", test_game.game_id, test_repo)
+    services.add_to_wishlist("tester", test_game.game_id, test_repo)
     assert test_game in test_user.favourite_games
 
 
 def test_remove_from_wishlist(test_repo, test_user, test_game):
-    utilities.remove_from_wishlist("tester", test_game.game_id, test_repo)
+    services.remove_from_wishlist("tester", test_game.game_id, test_repo)
     assert test_game not in test_user.favourite_games
 
 
 def test_make_review(test_repo, test_user, test_game):
-    review = utilities.make_review("test", test_user, test_game, 5)
+    review = services.make_review("test", test_user, test_game, 5)
     assert review.comment == "test"
     assert review.user == test_user
     assert review.game == test_game
@@ -254,18 +254,18 @@ def test_make_review(test_repo, test_user, test_game):
 
 def test_make_review_invalid_rating(test_repo, test_user, test_game):
     with pytest.raises(ValueError):
-        utilities.make_review("test", test_user, test_game, 6)
+        services.make_review("test", test_user, test_game, 6)
 
 def test_make_review_negative_rating(test_repo, test_user, test_game):
     with pytest.raises(ValueError):
-        utilities.make_review("test", test_user, test_game, -1)
+        services.make_review("test", test_user, test_game, -1)
 
 def test_make_review_invalid_user(test_repo, test_user, test_game):
     with pytest.raises(ValueError):
-        utilities.make_review("test", None, test_game, 5)
+        services.make_review("test", None, test_game, 5)
     
 def test_make_review_invalid_game(test_repo, test_user, test_game):
     with pytest.raises(ValueError):
-        utilities.make_review("test", test_user, None, 5)
+        services.make_review("test", test_user, None, 5)
     
     

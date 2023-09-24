@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify, render_template, abort, request, session, 
 from games.authentication.authentication import login_required
 from games.description import descriptionServices
 import games.adapters.repository as repo
-import games.utilities as utilities
+import games.utilities.services as services
 from better_profanity import profanity
 from flask_wtf import FlaskForm
 from wtforms import TextAreaField, HiddenField, SubmitField, IntegerField
@@ -21,7 +21,7 @@ def description(game_id):
     # Initialize the form only if the user is logged in
     if 'username' in session:
         form = CommentForm()
-        user = utilities.get_user(session['username'], repo.repo_instance)
+        user = services.get_user(session['username'], repo.repo_instance)
         favourite_games = user.favourite_games
     else:
         form = None
@@ -50,14 +50,14 @@ def add_review_endpoint(game_id):
 @login_required
 def add_to_wishlist_endpoint(game_id):
     username = session['username']
-    utilities.add_to_wishlist(username, game_id, repo.repo_instance)
+    services.add_to_wishlist(username, game_id, repo.repo_instance)
     return redirect(url_for('description_bp.description', game_id=game_id))
 
 @description_blueprint.route('/browse/<int:game_id>/remove_from_wishlist', methods=['POST'])
 @login_required
 def remove_from_wishlist_endpoint(game_id):
     username = session['username']
-    utilities.remove_from_wishlist(username, game_id, repo.repo_instance)
+    services.remove_from_wishlist(username, game_id, repo.repo_instance)
     return redirect(url_for('description_bp.description', game_id=game_id))
 
 

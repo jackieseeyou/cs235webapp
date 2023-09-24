@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, abort, session, redirect, url_for, request
 import games.adapters.repository as repo
-from games.utilities import get_user, remove_from_wishlist
+from games.utilities.services import get_user, remove_from_wishlist
 from games.authentication.authentication import login_required
 
 user_blueprint = Blueprint('user_bp', __name__)
