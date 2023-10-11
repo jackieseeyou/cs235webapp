@@ -38,27 +38,30 @@ game_genres_table = Table(
     'game_genres', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
     Column('game_id', ForeignKey('games.game_id')),
-    Column('genre_id', ForeignKey('genres.genre_id')),
+    Column('genre_id', ForeignKey('genres.genre_name')),
 )
 
 publishers_table = Table(
     'publishers', metadata,
-    Column('publisher_name', Text, primary_key=True, nullable=False),
+    #Column('publisher_id',Integer, primary_key=True, autoincrement=True),
+    Column('publisher_name', String(64), primary_key=True),
+    #Column('publisher_name', String(64), nullable=True),
 )
 
 reviews_table = Table(
-    'reviews', metadata, 
+    'reviews', metadata,
+    Column('review_id', Integer, primary_key=True, autoincrement=True),
     Column('timestamp', DateTime, nullable=False),
-    Column('comment', String(255),nullable=False),
+    Column('comment', String(255), nullable=False),
     Column('rating', Integer, nullable=False),
-    Column('game_id', ForeignKey('games.game_id')),
-    Column('user_id', ForeignKey('users.user_id')),
+    Column('game', ForeignKey('games.game_id')),
+    Column('user', ForeignKey('users.username')),
 )
 
 wishlist_table = Table(
     'wishlist', metadata,
     Column('wishlist_id', Integer, primary_key=True, autoincrement=True),
-    Column('user_id', ForeignKey('users.user_id')),
+    Column('user', ForeignKey('users.username')),
 )
 
 game_wishlist_table = Table(
@@ -71,9 +74,9 @@ game_wishlist_table = Table(
 
 def map_model_to_tables():
     mapper(User, users_table, properties={
-        '_User__user_name': users_table.c.user_name,
-        '_User__user_name': users_table.c.password,
-        '_User__reviews': relationship(Review, back_populates='_Reviews__user'),
+        '_User__username': users_table.c.username,
+        '_User__password': users_table.c.password,
+        '_User__reviews': relationship(Review, back_populates='_Review__user'),
     })
 
     mapper(Game, games_table, properties={
@@ -85,9 +88,9 @@ def map_model_to_tables():
         '_Game__image_url': games_table.c.image_url,
         '_Game__website_url': games_table.c.website_url,
         '_Game__video_url': games_table.c.video_url,
-        '_Game__publisher': relationship(Publisher),
-        '_Game__reviews': relationship(Review, back_populates='Review__game'),
-        '_Game__genres': relationship(Genre, secondary=games_genres_table),
+        #'_Game__publisher': relationship(Publisher),
+        '_Game__reviews': relationship(Review, back_populates='_Review__game'),
+        '_Game__genres': relationship(Genre, secondary=game_genres_table),
     })
 
     mapper(Genre, genres_table, properties={
@@ -95,19 +98,19 @@ def map_model_to_tables():
     })
 
     mapper(Publisher, publishers_table, properties={
-        '_Game__publisher_name': publishers_table.c.publisher_name,
+        '_Publisher__publisher_name': publishers_table.c.publisher_name,
     })
 
     mapper(Review, reviews_table, properties={
-        '_Review__timestamp': games_table.c.timestamp,
-        '_Review__comment': games_table.c.comment,
-        '_Review__rating': games_table.c.rating,
-        '_Review__game': games_table.c.game,
-        '_Review__user': games_table.c.user,
+        '_Review__timestamp': reviews_table.c.timestamp,
+        '_Review__comment': reviews_table.c.comment,
+        '_Review__rating': reviews_table.c.rating,
+        '_Review__game': relationship(Game),
+        '_Review__user': relationship(User),
 
     })
 
-    mapper(Wishlist, wishlist_table, properites={
-        '_Wishlist__user': wishlist_table.c.user_name,
+    mapper(Wishlist, wishlist_table, properties={
+        '_Wishlist__user': wishlist_table.c.user,
         '_Wishlist__list_of_games': relationship(Game, secondary=game_wishlist_table)
     })

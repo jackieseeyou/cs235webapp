@@ -9,6 +9,7 @@ from sqlalchemy.orm import scoped_session
 from games.domainmodel.model import Game, Genre, Publisher, User, Review, Wishlist
 from games.adapters.repository import AbstractRepository
 
+
 class SessionContextManager:
 
     def __init__(self, session_factory):
@@ -39,6 +40,7 @@ class SessionContextManager:
     def close_current_session(self):
         if not self.__session is None:
             self.__session.close()
+
 
 class SqlAlchemyRepository(AbstractRepository):
 
@@ -80,8 +82,10 @@ class SqlAlchemyRepository(AbstractRepository):
     
     def search_games_by_publisher(self, publisher_name: str) -> List[Game]:
         return 0
-
-    def add_publisher(self, publisher):
+    def get_number_of_games(self):
+        number_of_games = self._session_cm.session.query(Game).count()
+        return number_of_games
+    def add_publisher(self, publisher: Publisher):
         with self._session_cm as scm:
             scm.session.merge(publisher)
             scm.commit()
@@ -113,13 +117,13 @@ class SqlAlchemyRepository(AbstractRepository):
         return publishers
         
     def get_users(self) -> List[User]:
-        users = self.session_cm.session.query(users).all()
+        users = self.session_cm.session.query(User).all()
         return users
     
     def get_user(self, username):
         user = None
         try:
-            user = self._session_cm.session.query(User).filter(User._User__user_name == user_name).one()
+            user = self._session_cm.session.query(User).filter(User._User__username == username).one()
         except NoResultFound:
             # Ignore any exception and return None.
             pass
