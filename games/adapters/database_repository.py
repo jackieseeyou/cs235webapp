@@ -75,13 +75,20 @@ class SqlAlchemyRepository(AbstractRepository):
         return 0
     
     def get_reviews_for_user(self, user_id: int) -> List[Review]:
-        return 0
+        reviews = self._session_cm.session.query(User).filter
+        return reviews
     
     def search_games_by_title(self, title_string: str) -> List[Game]:
-        return 0
-    
+        games = self._session_cm.session.query(Game).filter(Game._Game__game_title.like(f"%{title_string}%")).all()
+        return games
+d
     def search_games_by_publisher(self, publisher_name: str) -> List[Game]:
-        return 0
+        games = self._session_cm.session.query(Game).filter(Game._Game__publisher.like(f"%{publisher_name}%")).all()
+        return games
+
+    def search_games_by_genre(self, genre_name: str) -> List [Game]:
+        games = self._session_cm.session.query(Game).filter(Game._Game__genres.like(f"%{genre_name}%")).all()
+        return games
     def get_number_of_games(self):
         number_of_games = self._session_cm.session.query(Game).count()
         return number_of_games

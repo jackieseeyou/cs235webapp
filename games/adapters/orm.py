@@ -43,7 +43,7 @@ game_genres_table = Table(
 
 publishers_table = Table(
     'publishers', metadata,
-    #Column('publisher_id',Integer, primary_key=True, autoincrement=True),
+    #olumn('publisher_id',Integer, primary_key=True, autoincrement=True),
     Column('publisher_name', String(64), primary_key=True),
     #Column('publisher_name', String(64), nullable=True),
 )
@@ -88,9 +88,9 @@ def map_model_to_tables():
         '_Game__image_url': games_table.c.image_url,
         '_Game__website_url': games_table.c.website_url,
         '_Game__video_url': games_table.c.video_url,
-        #'_Game__publisher': relationship(Publisher),
         '_Game__reviews': relationship(Review, back_populates='_Review__game'),
         '_Game__genres': relationship(Genre, secondary=game_genres_table),
+         '_Game__publisher': relationship(Publisher),
     })
 
     mapper(Genre, genres_table, properties={
