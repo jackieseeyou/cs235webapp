@@ -23,3 +23,5 @@ def search_games(query, repo:AbstractRepository):
     games = get_games(repo)
     filtered_games = [game for game in games if query.lower() in game['title'].lower()]
     return filtered_games
+
+

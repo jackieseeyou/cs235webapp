@@ -1,5 +1,6 @@
 """Initialize Flask app."""
 
+from pathlib import Path
 from flask import Flask
 import games.adapters.repository as repo
 from games.adapters.memory_repository import MemoryRepository, populate
@@ -14,9 +15,14 @@ def create_app(test_config=None):
     # Create the Flask app object.
     app = Flask(__name__)
 
-    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-    app.config['WTF_CSRF_SECRET_KEY'] = os.environ.get('WTF_CSRF_SECRET_KEY')
+    app.config.from_object('config.Config')
 
+    if test_config is not None:
+        # Load test configuration, and override any configuration settings.
+        app.config.from_mapping(test_config)
+
+    repo.repo_instance = MemoryRepository()
+    populate(repo.repo_instance)
 
 
     with app.app_context():
@@ -39,8 +45,7 @@ def create_app(test_config=None):
         app.register_blueprint(authentication.login_blueprint)
         app.register_blueprint(authentication.signup_blueprint)
         app.register_blueprint(authentication.logout_blueprint)
-    repo.repo_instance = MemoryRepository()
-    populate(repo.repo_instance)
+
 
     
     return app

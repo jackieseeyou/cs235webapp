@@ -45,7 +45,10 @@ def signup():
         services.add_user(form.user_name.data, form.password.data, repo.repo_instance)
         return redirect(url_for('login_bp.login'))
     
-    return render_template("authentication/authentication.html", title="Sign Up", form=form)
+    return render_template("authentication/authentication.html",
+                            title="Sign Up", 
+                            form=form, 
+                            handler_url = url_for('signup_bp.signup'))
 
 @logout_blueprint.route('/logout')
 def logout():

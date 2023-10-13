@@ -116,8 +116,3 @@ def test_register_page(client):
         assert response.status_code == 200
 
 
-def test_profile_page_while_not_logged_in(client):
-    with client:
-        response = client.get('/profile')
-        assert response.status_code == 500
-

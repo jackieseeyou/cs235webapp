@@ -6,6 +6,7 @@ from games.utilities.services import make_review
 def get_game(repo: AbstractRepository, game_id):
     return repo.get_game(game_id)
 
+
 def add_review(game_id: int, review_text: str, rating: int, username: str, repo: AbstractRepository):
     game = repo.get_game(game_id)
     if not game:
