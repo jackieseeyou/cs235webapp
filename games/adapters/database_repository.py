@@ -103,28 +103,28 @@ class SqlAlchemyRepository(AbstractRepository):
             scm.commit()
 
     def get_games(self, sorting: bool= False) -> List[Game]:
-        games = self.session_cm.session.query(Game).all()
+        games = self._session_cm.session.query(Game).all()
         return games
     
     def get_game(self, game_id: int) -> Game:
         game = None
         try:
-            game = self.session_cm.session.query(Game).filter(Game._Game__game_id == game_id).one()
+            game = self._session_cm.session.query(Game).filter(Game._Game__game_id == game_id).one()
         except NoResultFound:
             print(f'Game {game_id} was not found')
         
         return game
         
     def get_all_genres(self) -> List[Genre]:
-        genres = self.session_cm.session.query(Genre).all()
+        genres = self._session_cm.session.query(Genre).all()
         return genres
         
     def get_publishers(self) -> List[Publisher]:
-        publishers = self.session_cm.session.query(Publisher).all()
+        publishers = self._session_cm.session.query(Publisher).all()
         return publishers
         
     def get_users(self) -> List[User]:
-        users = self.session_cm.session.query(User).all()
+        users = self._session_cm.session.query(User).all()
         return users
     
     def get_user(self, username):

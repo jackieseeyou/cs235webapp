@@ -19,13 +19,13 @@ def create_app(test_config=None):
 
     # Create the Flask app object.
     app = Flask(__name__)
-    
+
     # Configure the app from configuration-file settings.
     app.config.from_object('config.Config')
     data_path = Path('games') / 'adapters' / 'data'
 
     if test_config is not None:
-        # Load test configuration, and override any configuration settings.
+        # Load test configuration, and override any configuration t.
         app.config.from_mapping(test_config)
         data_path = app.config['TEST_DATA_PATH']
 
@@ -62,8 +62,9 @@ def create_app(test_config=None):
             # For testing, or first-time use of the web application, reinitialise the database.
             clear_mappers()
             metadata.create_all(database_engine)  # Conditionally create database tables.
-            for table in reversed(metadata.sorted_tables):  # Remove any data from the tables.
-                database_engine.execute(table.delete())
+            with database_engine.connect() as connection:
+                for table in reversed(metadata.sorted_tables):  # Remove any data from the tables.
+                    connection.execute(table.delete())
 
             # Generate mappings that map domain model classes to the database tables.
             map_model_to_tables()
