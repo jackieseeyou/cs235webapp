@@ -25,7 +25,7 @@ games_table = Table(
     Column('image_url', String(255), nullable=True),
     Column('website_url', String(255), nullable=True),
     Column('video_url', String(255), nullable=True),
-    Column('publisher', ForeignKey('publishers.publisher_name'))
+    Column('publisher_name', ForeignKey('publishers.publisher_name'))
 )
 
 genres_table = Table(
@@ -47,6 +47,7 @@ publishers_table = Table(
     Column('publisher_name', String(64), primary_key=True),
     #Column('publisher_name', String(64), nullable=True),
 )
+
 
 reviews_table = Table(
     'reviews', metadata,
@@ -90,15 +91,18 @@ def map_model_to_tables():
         '_Game__video_url': games_table.c.video_url,
         '_Game__reviews': relationship(Review, back_populates='_Review__game'),
         '_Game__genres': relationship(Genre, secondary=game_genres_table),
-         '_Game__publisher': relationship(Publisher),
+        '_Game__publisher': relationship(Publisher, foreign_keys=[games_table.c.publisher_name]),
     })
 
     mapper(Genre, genres_table, properties={
         '_Genre__genre_name': genres_table.c.genre_name,
+
     })
 
     mapper(Publisher, publishers_table, properties={
         '_Publisher__publisher_name': publishers_table.c.publisher_name,
+        '_Publisher__games': relationship(Game, backref='_Game__publisher', foreign_keys=[games_table.c.publisher_name]),
+
     })
 
     mapper(Review, reviews_table, properties={

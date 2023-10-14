@@ -81,7 +81,7 @@ class SqlAlchemyRepository(AbstractRepository):
     def search_games_by_title(self, title_string: str) -> List[Game]:
         games = self._session_cm.session.query(Game).filter(Game._Game__game_title.like(f"%{title_string}%")).all()
         return games
-d
+    
     def search_games_by_publisher(self, publisher_name: str) -> List[Game]:
         games = self._session_cm.session.query(Game).filter(Game._Game__publisher.like(f"%{publisher_name}%")).all()
         return games
