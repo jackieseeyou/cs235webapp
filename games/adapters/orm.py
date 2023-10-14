@@ -4,7 +4,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import mapper, relationship
 
-from games.domainmodel.model import Game, Genre, Publisher, User, Review, Wishlist
+from games.domainmodel.model import Game, Genre, Publisher, User, Review
 
 # global variable giving access to the MetaData (schema) information of the database
 metadata = MetaData()
@@ -59,17 +59,12 @@ reviews_table = Table(
     Column('user', ForeignKey('users.username')),
 )
 
-wishlist_table = Table(
-    'wishlist', metadata,
-    Column('wishlist_id', Integer, primary_key=True, autoincrement=True),
-    Column('user', ForeignKey('users.username')),
-)
 
-game_wishlist_table = Table(
-    'game_wishlist', metadata,
+game_favourited_table = Table(
+    'favourite_games', metadata,
     Column('id', Integer, primary_key=True, autoincrement=True),
     Column('game_id', ForeignKey('games.game_id')),
-    Column('wishlist_id', ForeignKey('wishlist.wishlist_id'))
+    Column('username', ForeignKey('users.username'))
 
 )
 
@@ -78,7 +73,11 @@ def map_model_to_tables():
         '_User__username': users_table.c.username,
         '_User__password': users_table.c.password,
         '_User__reviews': relationship(Review, back_populates='_Review__user'),
-    })
+        '_User__favourite_games': relationship(
+            Game, 
+            secondary=game_favourited_table, 
+            back_populates='_Game__favourited_by'
+        )    })
 
     mapper(Game, games_table, properties={
         '_Game__game_id': games_table.c.game_id,
@@ -92,7 +91,8 @@ def map_model_to_tables():
         '_Game__publisher_name': games_table.c.publisher,   # <-- This is the new line
         '_Game__reviews': relationship(Review, back_populates='_Review__game'),
         '_Game__genres': relationship(Genre, secondary=game_genres_table),
-        '_Game__publisher': relationship(Publisher, foreign_keys=[games_table.c.publisher])
+        '_Game__publisher': relationship(Publisher, foreign_keys=[games_table.c.publisher]),
+        '_Game__favourited_by': relationship(User, secondary=game_favourited_table, back_populates='_User__favourite_games'),
     })
 
 
@@ -113,9 +113,4 @@ def map_model_to_tables():
         '_Review__game': relationship(Game),
         '_Review__user': relationship(User),
 
-    })
-
-    mapper(Wishlist, wishlist_table, properties={
-        '_Wishlist__user': wishlist_table.c.user,
-        '_Wishlist__list_of_games': relationship(Game, secondary=game_wishlist_table)
     })
