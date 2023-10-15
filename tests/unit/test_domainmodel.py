@@ -1,4 +1,5 @@
 from datetime import datetime
+import DateTime
 import pytest
 import os
 from games.domainmodel.model import Publisher, Genre, Game, Review, User, Wishlist
@@ -339,6 +340,8 @@ def test_review_initialization():
     game = Game(1, "Domino Game")
     timestamp = datetime.today()
     review = Review(user, game, 4, "Great game!", timestamp)
+    timestamp = datetime.today()
+    review = Review(user, game, 4, "Great game!", timestamp)
     assert review.user == user
     assert review.game == game
     assert review.rating == 4
@@ -346,11 +349,17 @@ def test_review_initialization():
 
     with pytest.raises(ValueError):
         review2 = Review(user, game, 6, "Great game!", timestamp)
+        review2 = Review(user, game, 6, "Great game!", timestamp)
 
 
 def test_review_eq():
     user = User("Shyamli", "pw12345")
     game = Game(1, "Domino Game")
+    timestamp = datetime.today()
+    review1 = Review(user, game, 4, "Great game!", timestamp)
+    review2 = Review(user, game, 4, "Superb game!", timestamp)
+    review3 = Review(user, game, 5, "Boring game!", timestamp)
+    review4 = Review(user, game, 2, "Classic game!", timestamp)
     timestamp = datetime.today()
     review1 = Review(user, game, 4, "Great game!", timestamp)
     review2 = Review(user, game, 4, "Superb game!", timestamp)
@@ -417,7 +426,7 @@ def test_wishlist_iter(wishlist, game):
     wishlist.add_game(game)
     wishlist_iterator = iter(wishlist)
     assert next(wishlist_iterator) == game
-
+    
 
 # Unit tests for CSVReader
 def create_csv_reader():
@@ -467,3 +476,4 @@ def test_genres_dataset():
     sorted_genres = sorted(genres_set)
     sorted_genre_sample = str(sorted_genres[:3])
     assert sorted_genre_sample == "[<Genre Action>, <Genre Adventure>, <Genre Animation & Modeling>]"
+

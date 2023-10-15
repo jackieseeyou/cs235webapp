@@ -20,6 +20,10 @@ def get_user(username:str, repo: AbstractRepository) -> User:
    
 
 def add_to_wishlist(username, game_id, repo: AbstractRepository):
+    user = get_user(username, repo)
+    game = get_game(game_id, repo)
+    repo.add_to_user_wishlist(user, game)    
+    
     try:
         user = get_user(username, repo)
         game = get_game(game_id, repo)
@@ -29,12 +33,9 @@ def add_to_wishlist(username, game_id, repo: AbstractRepository):
 
 
 def remove_from_wishlist(username, game_id, repo: AbstractRepository):
-    try:
-        user = get_user(username, repo)
-        game = get_game(game_id, repo)
-    except:
-        raise ValueError("Invalid username or game id")
-    user.remove_favourite_game(game)
+    user = get_user(username, repo)
+    game = get_game(game_id, repo)
+    repo.remove_from_wishlist(user, game)
 
 def make_review(review_text: str, user: User, game: Game, rating: int):
     timestamp = datetime.today()
