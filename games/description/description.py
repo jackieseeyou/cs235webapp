@@ -64,7 +64,7 @@ def remove_from_wishlist(game_id, username, repo):
     services.remove_from_wishlist(username, game_id, repo)
 
 
-@description_blueprint.route('/browse/<int:game_id>/add_review', methods=['GET', 'POST'])
+@description_blueprint.route('/browse/<int:game_id>/remove_from_wishlist', methods=['GET', 'POST'])
 @login_required
 def remove_from_wishlist_endpoint(game_id):
     username = session['username']

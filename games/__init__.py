@@ -1,5 +1,6 @@
 """Initialize Flask app."""
 
+from pathlib import Path
 from flask import Flask
 
 # imports from SQLAlchemy
@@ -81,8 +82,8 @@ def create_app(test_config=None):
         # Load test configuration, and override any configuration settings.
         app.config.from_mapping(test_config)
 
-    repo.repo_instance = MemoryRepository()
-    populate(repo.repo_instance)
+    # repo.repo_instance = MemoryRepository()
+    # populate(repo.repo_instance)
 
 
     with app.app_context():
