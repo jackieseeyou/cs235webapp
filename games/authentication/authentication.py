@@ -19,8 +19,7 @@ def login():
 
     try:
         if form.validate_on_submit():
-            username = form.user_name.data.strip().lower()
-            user = services.get_user(username, repo.repo_instance)
+            user = services.get_user(form.user_name.data, repo.repo_instance)
 
             services.authenticate_user(user['username'], form.password.data, repo.repo_instance)
 

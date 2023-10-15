@@ -287,7 +287,6 @@ class User:
         return self.__favourite_games
 
     def add_favourite_game(self, game):
-
         if not isinstance(game, Game) or game in self.__favourite_games:
             return
         self.__favourite_games.append(game)
