@@ -66,6 +66,14 @@ user_games_association = Table(
     Column('game_id', ForeignKey('games.game_id')),
 )
 
+games_review_association = Table(
+    'games_review_association', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('game_id', ForeignKey('games.game_id')),
+    Column('review_id', ForeignKey('reviews.review_id')),
+)
+
+
 def map_model_to_tables():
     mapper(User, users_table, properties={
         '_User__username': users_table.c.username,
@@ -105,7 +113,7 @@ def map_model_to_tables():
         '_Review__timestamp': reviews_table.c.timestamp,
         '_Review__comment': reviews_table.c.comment,
         '_Review__rating': reviews_table.c.rating,
-        '_Review__game': relationship(Game),
-        '_Review__user': relationship(User),
+        '_Review__game': relationship(Game, foreign_keys=[reviews_table.c.game]),
+        '_Review__user': relationship(User, foreign_keys=[reviews_table.c.user]),
 
     })
