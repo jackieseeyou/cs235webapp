@@ -12,7 +12,7 @@ metadata = MetaData()
 users_table = Table(
     'users', metadata,
     Column('username', String(20), primary_key=True, unique=True, nullable=False),
-    Column('password', String(20), nullable=False),
+    Column('password', String(20), nullable=False)
 )
 
 games_table = Table(
@@ -61,9 +61,9 @@ reviews_table = Table(
 
 user_games_association = Table(
     'user_games_association', metadata,
+    Column('id', Integer, primary_key=True, autoincrement=True),
     Column('username', ForeignKey('users.username')),
     Column('game_id', ForeignKey('games.game_id')),
-    PrimaryKeyConstraint('username', 'game_id')  # creates a composite primary key
 )
 
 def map_model_to_tables():

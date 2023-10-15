@@ -141,6 +141,18 @@ class SqlAlchemyRepository(AbstractRepository):
         reviews = self._session_cm.session.query(Review).all()
         return reviews
     
+    def add_to_user_wishlist(self, user: User, game: Game):
+        with self._session_cm as scm:
+            user.favourite_games.append(game)  # Add game to user's wishlist
+            scm.session.merge(user)     # Merge updated user into the session
+            scm.commit()                # Commit changes to the database
+
+
+    def remove_from_wishlist(self, user: User, game: Game):
+        with self._session_cm as scm:
+            user.favourite_games.remove(game)
+            scm.session.merge(user)
+            scm.commit()
         
 
         
