@@ -52,7 +52,7 @@ def add_review_endpoint(game_id):
 def add_to_wishlist_endpoint(game_id):
     username = session['username']
     add_to_wishlist(game_id, username, repo.repo_instance)
-    return render_template("/description/description.html", game = descriptionServices.get_game(repo.repo_instance, game_id))
+    return redirect(url_for('description_bp.description', game_id=game_id))
 
 
 def add_to_wishlist(game_id, username, repo):
