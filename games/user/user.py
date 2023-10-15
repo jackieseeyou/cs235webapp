@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, abort, session, redirect, url_for,
 import games.adapters.repository as repo
 from games.utilities.services import get_user, remove_from_wishlist
 from games.authentication.authentication import login_required
+from games.description.description import remove_from_wishlist
+from games.utilities.services import get_user
 
 user_blueprint = Blueprint('user_bp', __name__)
 
@@ -21,7 +23,7 @@ def remove_from_wishlist_endpoint():
     username = session['username']
     username = username.lower().strip()
     game_id = int(request.form['game_id'])
-    remove_from_wishlist(username,game_id, repo.repo_instance)
+    remove_from_wishlist(game_id, username, repo.repo_instance)
     return redirect(url_for('user_bp.user'))
 
 

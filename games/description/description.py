@@ -3,6 +3,7 @@ from games.authentication.authentication import login_required
 from games.description import descriptionServices
 import games.adapters.repository as repo
 import games.utilities.services as services
+import games.utilities.services as services
 from better_profanity import profanity
 from flask_wtf import FlaskForm
 from wtforms import TextAreaField, HiddenField, SubmitField, IntegerField
@@ -50,10 +51,20 @@ def add_review_endpoint(game_id):
 @login_required
 def add_to_wishlist_endpoint(game_id):
     username = session['username']
-    services.add_to_wishlist(username, game_id, repo.repo_instance)
-    return redirect(url_for('description_bp.description', game_id=game_id))
+    add_to_wishlist(game_id, username, repo.repo_instance)
+    return render_template("/description/description.html", game = descriptionServices.get_game(repo.repo_instance, game_id))
 
-@description_blueprint.route('/browse/<int:game_id>/remove_from_wishlist', methods=['POST'])
+
+def add_to_wishlist(game_id, username, repo):
+    """Adds a game to a user's wishlist."""
+    services.add_to_wishlist(username, game_id, repo)
+    
+def remove_from_wishlist(game_id, username, repo):
+    """Removes a game from a user's wishlist."""
+    services.remove_from_wishlist(username, game_id, repo)
+
+
+@description_blueprint.route('/browse/<int:game_id>/add_review', methods=['GET', 'POST'])
 @login_required
 def remove_from_wishlist_endpoint(game_id):
     username = session['username']
