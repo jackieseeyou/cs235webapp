@@ -82,9 +82,6 @@ def create_app(test_config=None):
         # Load test configuration, and override any configuration settings.
         app.config.from_mapping(test_config)
 
-    repo.repo_instance = memory_repository.MemoryRepository()
-    memory_repository.populate(repo.repo_instance)
-
 
     with app.app_context():
         from .browse import browse
