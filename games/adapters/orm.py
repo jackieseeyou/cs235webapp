@@ -43,9 +43,7 @@ game_genres_table = Table(
 
 publishers_table = Table(
     'publishers', metadata,
-    #olumn('publisher_id',Integer, primary_key=True, autoincrement=True),
     Column('publisher_name', String(64), primary_key=True),
-    #Column('publisher_name', String(64), nullable=True),
 )
 
 
@@ -66,19 +64,12 @@ user_games_association = Table(
     Column('game_id', ForeignKey('games.game_id')),
 )
 
-games_review_association = Table(
-    'games_review_association', metadata,
-    Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('game_id', ForeignKey('games.game_id')),
-    Column('review_id', ForeignKey('reviews.review_id')),
-)
-
 
 def map_model_to_tables():
     mapper(User, users_table, properties={
         '_User__username': users_table.c.username,
         '_User__password': users_table.c.password,
-        '_User__reviews': relationship(Review, back_populates='_Review__user'),
+            '_User__reviews': relationship(Review, back_populates='_Review__user', foreign_keys=[reviews_table.c.user]),
         '_User__favourite_games': relationship(Game, secondary=user_games_association, back_populates='_Game__users')
     })
 
@@ -92,7 +83,7 @@ def map_model_to_tables():
         '_Game__website_url': games_table.c.website_url,
         '_Game__video_url': games_table.c.video_url,
         '_Game__publisher_name': games_table.c.publisher,
-        '_Game__reviews': relationship(Review, back_populates='_Review__game'),
+        '_Game__reviews': relationship(Review, back_populates='_Review__game', foreign_keys=[reviews_table.c.game]),
         '_Game__genres': relationship(Genre, secondary=game_genres_table),
         '_Game__publisher': relationship(Publisher, foreign_keys=[games_table.c.publisher]),
         '_Game__users': relationship(User, secondary=user_games_association, back_populates='_User__favourite_games')

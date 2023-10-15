@@ -78,6 +78,12 @@ class MemoryRepository(AbstractRepository):
         for index, review in enumerate(self.__reviews):
             if review.user.username == updated_review.user.username and review.game.game_id == updated_review.game.game_id:
                 self.__reviews[index] = updated_review
+    
+    def add_to_user_wishlist(self, user: User, game: Game):
+        user.favourite_games.append(game)
+    
+    def remove_from_wishlist(self, user: User, game: Game):
+        user.favourite_games.remove(game)
 
 def populate(repo: AbstractRepository):
     dir_name = os.path.dirname(os.path.abspath(__file__))
