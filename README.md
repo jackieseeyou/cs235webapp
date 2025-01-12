@@ -61,5 +61,9 @@ The data files are modified excerpts downloaded from:
 
 https://huggingface.co/datasets/FronkonGames/steam-games-dataset
 
-
+Credits to: 
+ Team Members:
+  Jackie Sieu, Kevin Yao, Michael Fu
+ Lecturers:
+  Asma Shakil, Shyamli Sindhwani
 
